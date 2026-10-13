@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="3" stroke-linecap="round">
+    <!-- A pair of slim hoops with hinge bars -->
+    <circle cx="206" cy="424" r="78"/>
+    <path d="M186 346 h40"/>
+    <circle cx="394" cy="424" r="78"/>
+    <path d="M374 346 h40"/>
+  </g>
+</svg>

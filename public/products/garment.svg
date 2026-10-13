@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Coat silhouette: shoulders, sleeves, body -->
+    <path d="M253 168 L182 212 L150 470 L208 484 L226 326 L219 700 L381 700 L374 326 L392 484 L450 470 L418 212 L347 168 Z"/>
+    <!-- Neckline -->
+    <path d="M253 168 Q300 206 347 168"/>
+    <!-- Centre front opening -->
+    <path d="M300 196 L300 700"/>
+  </g>
+</svg>

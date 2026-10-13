@@ -1,0 +1,339 @@
+{
+  "categories": [
+    {
+      "slug": "new-arrivals",
+      "name": "New Arrivals",
+      "filters": {
+        "variantAxes": [
+          "size"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
+    },
+    {
+      "slug": "ready-to-wear",
+      "name": "Ready-to-Wear",
+      "filters": {
+        "variantAxes": [
+          "size"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
+    },
+    {
+      "slug": "accessories",
+      "name": "Accessories",
+      "filters": {
+        "variantAxes": [
+          "size",
+          "color"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
+    }
+  ],
+  "shippingMethods": [
+    {
+      "code": "STANDARD",
+      "name": "Standard delivery",
+      "fee": 30000,
+      "etaDaysMin": 3,
+      "etaDaysMax": 5,
+      "freeFrom": 1000000
+    },
+    {
+      "code": "EXPRESS",
+      "name": "Express delivery (city center only)",
+      "fee": 50000,
+      "etaDaysMin": 1,
+      "etaDaysMax": 2,
+      "freeFrom": null
+    },
+    {
+      "code": "PICKUP",
+      "name": "Boutique pickup",
+      "fee": 0,
+      "etaDaysMin": 0,
+      "etaDaysMax": 0,
+      "freeFrom": null
+    }
+  ],
+  "priceRules": [
+    {
+      "name": "Evening edit 8-10pm",
+      "type": "TIME_WINDOW",
+      "condition": {
+        "start": "20:00",
+        "end": "22:00"
+      },
+      "percentOff": 10,
+      "priority": 1
+    },
+    {
+      "name": "End of season markdown",
+      "type": "STOCK_LEVEL",
+      "condition": {
+        "minStock": 30
+      },
+      "percentOff": 15,
+      "priority": 2
+    },
+    {
+      "name": "First order welcome",
+      "type": "SEGMENT",
+      "condition": {
+        "segment": "NEW"
+      },
+      "percentOff": 5,
+      "priority": 0
+    }
+  ],
+  "products": [
+    {
+      "slug": "oversized-wool-coat",
+      "name": "Oversized wool coat",
+      "categorySlug": "new-arrivals",
+      "description": "Double-faced wool in a relaxed drop-shoulder cut. Unlined, with a concealed placket and deep patch pockets.",
+      "attributes": {
+        "material": "wool"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Oversized wool coat"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "COAT-WOOL-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 4890000,
+          "stock": 6
+        },
+        {
+          "sku": "COAT-WOOL-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 4890000,
+          "stock": 9
+        },
+        {
+          "sku": "COAT-WOOL-L",
+          "options": {
+            "size": "L"
+          },
+          "basePrice": 4890000,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "slug": "silk-slip-dress",
+      "name": "Silk slip dress",
+      "categorySlug": "new-arrivals",
+      "description": "Bias-cut silk charmeuse with adjustable straps and a softly draped cowl neckline.",
+      "attributes": {
+        "material": "silk"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Silk slip dress"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "DRESS-SILK-XS",
+          "options": {
+            "size": "XS"
+          },
+          "basePrice": 2450000,
+          "stock": 5
+        },
+        {
+          "sku": "DRESS-SILK-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 2450000,
+          "stock": 11
+        },
+        {
+          "sku": "DRESS-SILK-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 2450000,
+          "stock": 8
+        }
+      ]
+    },
+    {
+      "slug": "cashmere-crewneck",
+      "name": "Cashmere crewneck",
+      "categorySlug": "ready-to-wear",
+      "description": "Mid-weight grade-A cashmere, knitted to a clean crewneck with ribbed trims.",
+      "attributes": {
+        "material": "cashmere"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Cashmere crewneck"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "KNIT-CASH-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 1890000,
+          "stock": 14
+        },
+        {
+          "sku": "KNIT-CASH-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 1890000,
+          "stock": 18
+        },
+        {
+          "sku": "KNIT-CASH-L",
+          "options": {
+            "size": "L"
+          },
+          "basePrice": 1890000,
+          "stock": 12
+        }
+      ]
+    },
+    {
+      "slug": "wide-leg-trousers",
+      "name": "Wide-leg tailored trousers",
+      "categorySlug": "ready-to-wear",
+      "description": "High-rise wool blend with a pressed crease and a fluid wide leg that falls straight from the hip.",
+      "attributes": {
+        "material": "wool blend"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Wide-leg tailored trousers"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "TROU-WIDE-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 1650000,
+          "stock": 10
+        },
+        {
+          "sku": "TROU-WIDE-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 1650000,
+          "stock": 7
+        }
+      ]
+    },
+    {
+      "slug": "structured-leather-tote",
+      "name": "Structured leather tote",
+      "categorySlug": "accessories",
+      "description": "Vegetable-tanned calfskin with a rigid base, twin rolled handles and a suede-lined interior.",
+      "attributes": {
+        "material": "leather"
+      },
+      "images": [
+        {
+          "url": "/products/bag.svg",
+          "alt": "Structured leather tote"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "BAG-TOTE-BLK",
+          "options": {
+            "color": "Black"
+          },
+          "basePrice": 3290000,
+          "stock": 0
+        }
+      ]
+    },
+    {
+      "slug": "gold-hoop-earrings",
+      "name": "Gold hoop earrings",
+      "categorySlug": "accessories",
+      "description": "Slim 18k gold-plated brass hoops with a hinged closure. Sold as a pair.",
+      "attributes": {
+        "material": "gold-plated brass"
+      },
+      "images": [
+        {
+          "url": "/products/jewellery.svg",
+          "alt": "Gold hoop earrings"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "EAR-HOOP-SM",
+          "options": {
+            "size": "Small"
+          },
+          "basePrice": 790000,
+          "stock": 40
+        },
+        {
+          "sku": "EAR-HOOP-LG",
+          "options": {
+            "size": "Large"
+          },
+          "basePrice": 890000,
+          "stock": 35
+        }
+      ]
+    }
+  ],
+  "demoAccounts": [
+    {
+      "email": "admin@atelier.test",
+      "name": "Admin Demo",
+      "password": "Password123!",
+      "role": "ADMIN"
+    },
+    {
+      "email": "staff@atelier.test",
+      "name": "Staff Demo",
+      "password": "Password123!",
+      "role": "STAFF"
+    },
+    {
+      "email": "customer1@atelier.test",
+      "name": "Customer A",
+      "password": "Password123!",
+      "role": "CUSTOMER"
+    },
+    {
+      "email": "customer2@atelier.test",
+      "name": "Customer B",
+      "password": "Password123!",
+      "role": "CUSTOMER"
+    }
+  ]
+}
