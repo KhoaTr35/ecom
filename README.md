@@ -16,6 +16,27 @@ bóng), chữ hiển thị Instrument Serif + Inter. Token màu/typography tập
 | Staff | staff@atelier.test | Password123! |
 | Customer | customer1@atelier.test | Password123! |
 
+## Dữ liệu lịch sử sau khi seed
+
+`pnpm db:seed` (`prisma/seed.ts`) không chỉ nạp catalog/tài khoản mà còn tạo
+sẵn lịch sử để trang admin có gì đó để hiện ngay, không cần tự thao tác trước:
+
+- **18 đơn hàng** (`seedOrderHistory`) trải trong 30 ngày gần nhất, đủ cả 5
+  nhóm trạng thái trên `/admin/orders` (Pending/Processing/Shipped/
+  Delivered/Cancelled). Hai cặp sản phẩm cố định (áo khoác len + quần ống
+  rộng; đầm lụa + bông tai) lặp lại ở vài đơn để mục "Frequently bought
+  together" trên trang sản phẩm có tín hiệu thật, không chỉ fallback cùng
+  danh mục. Không đụng vào tồn kho (`ProductVariant.stock`) — đây là đơn
+  lịch sử, không phải đơn đang giữ hàng.
+- **66 analytics event** (`seedAnalyticsEvents`) — một "phiên" mỗi ngày
+  trong 30 ngày, lặp theo chu kỳ 10 ngày với tỷ lệ phễu giảm dần
+  (100% page_view → 60% product_view → 30% add_to_cart → 20%
+  begin_checkout → 10% purchase), để tile "Visits" và biểu đồ "Funnel" trên
+  `/admin/analytics` không bị kẹt ở 0 như khi mới code xong (xem phần dưới).
+
+Seed lại (`pnpm db:seed`) sẽ xoá sạch đơn + event cũ rồi tạo lại, chạy nhiều
+lần không bị trùng lặp/tăng dần.
+
 ## Analytics & cookie consent
 
 Lần đầu vào site sẽ thấy banner xin phép cookie ở dưới. **Accept** mới tạo
@@ -24,7 +45,9 @@ phẩm, thêm giỏ, vào checkout, đặt hàng) mới được ghi vào `Analy
 `POST /api/analytics/track` (route public, không cần đăng nhập vì phần lớn
 traffic này là khách chưa đăng nhập). **Decline** hoặc không trả lời thì
 không ghi gì. Dashboard `/admin/analytics` đọc từ bảng này cho tile "Visits"
-và biểu đồ "Funnel" — nếu mới clone về và chưa test với Accept, cả hai sẽ là 0.
+và biểu đồ "Funnel" — sau `pnpm db:seed` đã có sẵn dữ liệu mẫu (xem phần
+"Dữ liệu lịch sử sau khi seed" trên) nên không hiện 0 ngay cả khi chưa tự
+Accept cookie lần nào.
 
 ## Trang quản trị (Admin)
 
@@ -145,7 +168,7 @@ dùng Neon. Lịch sử migration nằm ở `prisma/migrations/*/migration.sql`.
 | `pnpm build` | Build production |
 | `pnpm db:migrate` | Tạo/áp migration (dev) |
 | `pnpm db:deploy` | Áp migration (production) |
-| `pnpm db:seed` | Nạp dữ liệu mẫu (`prisma/seed-data.json`), chạy lại được nhiều lần |
+| `pnpm db:seed` | Nạp dữ liệu mẫu + lịch sử đơn/analytics (xem dưới), chạy lại được nhiều lần |
 | `pnpm test` | Chạy unit test (Vitest) |
 | `pnpm lint` | ESLint |
 | `pnpm exec tsc --noEmit` | Kiểm tra type |
