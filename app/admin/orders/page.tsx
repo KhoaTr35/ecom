@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { OrderActions } from "@/components/admin/order-actions";
 import { OrderStatusTabs } from "@/components/admin/order-status-tabs";
 import { Badge } from "@/components/ui/badge";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatVnd } from "@/lib/utils";
 
@@ -40,7 +41,12 @@ export default async function AdminOrdersPage({
       <OrderStatusTabs tabs={STATUS_TABS} active={tab.value} />
 
       {orders.length === 0 ? (
-        <p className="mt-4 rounded-lg border p-6 text-sm text-muted-foreground">No orders in this view.</p>
+        <Empty className="mt-4">
+          <EmptyHeader>
+            <EmptyTitle>No orders in this view</EmptyTitle>
+            <EmptyDescription>Try a different status tab.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       ) : (
         <div className="mt-4 rounded-lg border">
           <Table>

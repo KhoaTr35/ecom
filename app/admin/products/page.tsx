@@ -2,6 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { ProductStatusSwitch } from "@/components/admin/product-status-switch";
 import { Button } from "@/components/ui/button";
+import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default async function AdminProductsPage() {
@@ -17,7 +18,12 @@ export default async function AdminProductsPage() {
       </div>
 
       {products.length === 0 ? (
-        <p className="rounded-lg border p-6 text-sm text-muted-foreground">No products yet. Run pnpm db:seed.</p>
+        <Empty>
+          <EmptyHeader>
+            <EmptyTitle>No products yet</EmptyTitle>
+            <EmptyDescription>Run pnpm db:seed, or create one.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       ) : (
         <div className="rounded-lg border">
           <Table>
