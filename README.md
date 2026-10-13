@@ -143,6 +143,30 @@ Postgres tự cài (không Docker), phải tạo trước bằng
 throw — trang catalog (`lib/catalog`) tự rơi về dữ liệu mock nên vẫn chạy
 được, nhưng đăng ký/đăng nhập (Better Auth, không có fallback) sẽ lỗi.
 
+### [Kế hoạch tương lai] Chuyển sang DB hosted (Supabase/Neon)
+
+Chưa làm, mới chỉ kiểm tra tính khả thi — nhưng kiến trúc hiện tại đã sẵn sàng
+cho việc này, không cần đổi code:
+
+- `lib/db.ts` (app runtime) đọc `DATABASE_URL`; `prisma.config.ts` (CLI —
+  migrate/studio) đọc `DIRECT_URL`. Đây đúng là mô hình pooled/direct mà
+  Supabase và Neon đều dùng (Supabase: cổng `6543` qua PgBouncer cho
+  `DATABASE_URL`, cổng `5432` trực tiếp cho `DIRECT_URL`).
+- Chuyển sang Supabase: tạo project, lấy 2 connection string đó bỏ vào
+  `.env`, chạy `pnpm db:migrate` (hoặc `db:deploy`) rồi `pnpm db:seed` như
+  bình thường.
+- Lưu ý: PgBouncer của Supabase mặc định chạy transaction-mode, có thể cần
+  thêm `?pgbouncer=true` vào `DATABASE_URL` để Prisma không lỗi vì prepared
+  statements — phải test thật một request ghi (đặt thử 1 đơn) sau khi đổi,
+  không chỉ test kết nối được.
+- Đây là đổi **schema**, không mang theo **data** — dữ liệu đang test ở
+  Postgres local (Docker) không tự chuyển qua; muốn có dữ liệu thì chạy lại
+  `pnpm db:seed` trên DB mới, hoặc tự `pg_dump`/`pg_restore` nếu cần giữ
+  nguyên dữ liệu cũ.
+- Một khi là DB dùng chung thật (không chỉ máy mình), phải đổi
+  `BETTER_AUTH_SECRET` sang giá trị mới tự sinh — giá trị trong
+  `.env.example` chỉ an toàn cho local/demo (xem ghi chú ở phần Cài đặt).
+
 ### Truy cập database để kiểm tra
 
 ```bash
