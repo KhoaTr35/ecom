@@ -52,7 +52,7 @@ export function CheckoutAddressSection({
                 key={a.id}
                 htmlFor={`address-${a.id}`}
                 className={cn(
-                  "flex cursor-pointer items-start gap-4 border p-4 text-sm transition-colors",
+                  "flex cursor-pointer items-start gap-4 rounded-lg border p-4 text-sm transition-colors",
                   checked ? "border-foreground" : "border-border hover:border-muted-foreground",
                 )}
               >
@@ -70,7 +70,7 @@ export function CheckoutAddressSection({
           <label
             htmlFor="address-new"
             className={cn(
-              "flex cursor-pointer items-center gap-4 border p-4 text-sm transition-colors",
+              "flex cursor-pointer items-center gap-4 rounded-lg border p-4 text-sm transition-colors",
               selectedAddressId === "new" ? "border-foreground" : "border-border hover:border-muted-foreground",
             )}
           >

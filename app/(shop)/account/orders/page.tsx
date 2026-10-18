@@ -70,7 +70,7 @@ export default function MyOrdersPage() {
           ))}
         </div>
       ) : orders.length === 0 ? (
-        <p className="mt-12 border border-dashed border-border p-8 text-sm text-muted-foreground">
+        <p className="mt-12 rounded-lg border border-dashed border-border p-8 text-sm text-muted-foreground">
           You don&apos;t have any orders yet.
         </p>
       ) : (
@@ -84,7 +84,7 @@ export default function MyOrdersPage() {
                   <p className="mt-1 text-sm text-muted-foreground">{formatVnd(o.total)}</p>
                 </div>
                 {step === null ? (
-                  <span className="label-eyebrow border border-border px-3 py-1.5 text-muted-foreground">
+                  <span className="label-eyebrow rounded-4xl border border-border px-3 py-1.5 text-muted-foreground">
                     {o.status.replace(/_/g, " ")}
                   </span>
                 ) : (

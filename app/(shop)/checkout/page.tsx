@@ -155,7 +155,7 @@ export default function CheckoutPage() {
                       key={m.code}
                       htmlFor={`shipping-${m.code}`}
                       className={cn(
-                        "flex cursor-pointer items-center gap-4 border p-4 text-sm transition-colors",
+                        "flex cursor-pointer items-center gap-4 rounded-lg border p-4 text-sm transition-colors",
                         checked ? "border-foreground" : "border-border hover:border-muted-foreground",
                       )}
                     >
@@ -220,7 +220,7 @@ function ShippingMethodRowsSkeleton({ count }: { count: number }) {
   return (
     <div className="mt-5 space-y-2">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="flex items-center gap-4 border border-border p-4">
+        <div key={i} className="flex items-center gap-4 rounded-lg border border-border p-4">
           <Skeleton className="size-4 rounded-full" />
           <Skeleton className="h-4 flex-1" />
           <Skeleton className="h-4 w-20" />

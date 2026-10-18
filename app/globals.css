@@ -48,8 +48,9 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* Monochrome editorial theme: pure black/white, zero radius, borders instead of
-   shadows. Depth comes from hairlines and inversion, never from elevation. */
+/* Monochrome editorial theme: pure black/white, soft rounded corners, borders
+   instead of shadows. Depth comes from hairlines and inversion, never from
+   elevation. */
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
@@ -74,7 +75,7 @@
   --chart-3: #a1a1aa;
   --chart-4: #d4d4d8;
   --chart-5: #71717a;
-  --radius: 0rem;
+  --radius: 0.75rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #0a0a0a;
   --sidebar-primary: #0a0a0a;

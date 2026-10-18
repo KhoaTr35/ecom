@@ -4,9 +4,12 @@
 phục vụ kinh doanh thực tế.
 Kế hoạch chi tiết: `Implementation Plan – Website TMĐT cho chủ đề X (CO3027).md`.
 
-**Giao diện:** monochrome tối giản (đen/trắng, bo góc 0, viền mảnh thay vì đổ
-bóng), chữ hiển thị Instrument Serif + Inter. Token màu/typography tập trung ở
-`app/globals.css` và `app/layout.tsx`.
+**Giao diện:** monochrome tối giản (đen/trắng, bo góc mềm `0.75rem`, viền mảnh
+thay vì đổ bóng), chữ hiển thị Instrument Serif + Inter. Bo góc toàn site chỉ
+do một biến `--radius` trong `app/globals.css` điều khiển (mọi `rounded-sm` →
+`rounded-4xl` đều tính theo tỉ lệ từ biến này) — đổi độ cong chỉ cần sửa một
+chỗ. Token màu/typography cũng tập trung ở `app/globals.css` và
+`app/layout.tsx`.
 
 ## Tài khoản demo (sau khi seed)
 

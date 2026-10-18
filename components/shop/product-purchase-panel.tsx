@@ -64,7 +64,7 @@ export function ProductPurchasePanel({
                   value={variant.id}
                   disabled={!available}
                   className={cn(
-                    "label-eyebrow min-h-11 rounded-none border px-4 py-2.5 transition-colors disabled:pointer-events-none disabled:opacity-100",
+                    "label-eyebrow min-h-11 rounded-lg border px-4 py-2.5 transition-colors disabled:pointer-events-none disabled:opacity-100",
                     !available &&
                       "cursor-not-allowed border-border bg-transparent text-muted-foreground line-through hover:bg-transparent",
                     available &&
