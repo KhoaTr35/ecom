@@ -92,6 +92,17 @@ và biểu đồ "Funnel" — sau `pnpm db:seed` đã có sẵn dữ liệu mẫ
 "Dữ liệu lịch sử sau khi seed" trên) nên không hiện 0 ngay cả khi chưa tự
 Accept cookie lần nào.
 
+## FAQ chat widget
+
+Nút tròn góc dưới-phải mọi trang shop (`components/shop/faq-chat-widget.tsx`)
+— hỏi-đáp 5 câu cố định (thanh toán, giao hàng, hủy đơn, đổi trả, theo dõi
+đơn), **không gọi AI thật, không gọi backend**. Bấm câu hỏi → hiện 3 chấm
+"đang gõ" ~1 giây → hiện câu trả lời đã viết sẵn; hết câu hỏi thì ẩn danh
+sách, chỉ còn dòng kết. Dùng đúng bộ chat primitives của shadcn
+(`Message`/`Bubble`/`MessageScroller`) thay vì tự dựng UI chat bằng div —
+`MessageScroller` lo việc neo câu hỏi mới lên đầu khung cuộn khi danh sách
+dài hơn khung nhìn, nên cài thêm gói `@shadcn/react` (xem `package.json`).
+
 ## Trang quản trị (Admin)
 
 Không có trong menu chính — truy cập trực tiếp `http://localhost:3000/admin`.
