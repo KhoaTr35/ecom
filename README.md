@@ -19,6 +19,46 @@ chỗ. Token màu/typography cũng tập trung ở `app/globals.css` và
 | Staff | staff@atelier.test | Password123! |
 | Customer | customer1@atelier.test | Password123! |
 
+## Danh mục (collections)
+
+`prisma/seed-data.json` → `categories`/`products` có 7 danh mục, mỗi danh mục
+2 sản phẩm (model `Category`/`Product`/`ProductVariant` có sẵn, không cần
+migration mới):
+
+| Slug | Tên | Loại sản phẩm |
+| --- | --- | --- |
+| `new-arrivals` | New Arrivals | Áo khoác len, đầm lụa |
+| `ready-to-wear` | Ready-to-Wear | Áo len cashmere, quần ống rộng |
+| `accessories` | Accessories | Túi tote da, bông tai vàng |
+| `autumn` | Autumn Collection | Áo sơ mi kẻ len, túi đeo chéo da |
+| `winter` | Winter Collection | Áo phao, bông tai ngọc trai |
+| `spring` | Spring Collection | Đầm họa tiết hoa, túi cỏ đan |
+| `christmas` | Christmas Collection | Blazer nhung đỏ, lắc tay vàng |
+
+Trang chủ (`/`) có 2 lối vào xem danh mục, cả hai đọc thật từ DB qua
+`listCategories()`, không hardcode:
+
+- **Poster grid** (`components/shop/collection-poster-grid.tsx`) — mục
+  "Collections" trên trang chủ, mỗi danh mục một "poster" chữ lớn (không có
+  ảnh thật — `Category` không có field ảnh, cố tình dùng chữ để khớp ngôn
+  ngữ thiết kế "không ảnh, chữ lớn" sẵn có của site), tile đảo màu
+  đen/trắng xen kẽ. Cả tile là link, bấm đâu cũng vào `/c/[slug]`.
+- **shadcn `Sidebar`** (`components/shop/collections-sidebar.tsx`, collapsed
+  mặc định, `collapsible="offcanvas"`) — mở bằng nút `SidebarTrigger` gốc
+  (icon toggle, góc trên-trái trang chủ, dính khi cuộn). Liệt kê cả 7 danh
+  mục chia 2 nhóm thật — **By season** (4 collection theo mùa) và
+  **By type** (3 danh mục gốc) — kèm badge số lượng sản phẩm thật.
+
+Header/footer/menu mobile (`components/shop/nav-links.ts`) hiện vẫn chỉ
+hardcode 3 link đầu (New Arrivals/Ready-to-Wear/Accessories) — 4 collection
+theo mùa chỉ vào được qua trang chủ hoặc URL trực tiếp, chưa đưa vào nav
+chính; đổi `nav-links.ts` sang đọc động từ `listCategories()` là việc có
+thể làm tiếp nếu muốn đồng bộ.
+
+Ảnh sản phẩm dùng lại 3 placeholder SVG có sẵn trong `public/products/`
+(`garment.svg`, `bag.svg`, `jewellery.svg`) theo loại sản phẩm, không fake
+ảnh thật.
+
 ## Dữ liệu lịch sử sau khi seed
 
 `pnpm db:seed` (`prisma/seed.ts`) không chỉ nạp catalog/tài khoản mà còn tạo

@@ -36,6 +36,56 @@
           "material"
         ]
       }
+    },
+    {
+      "slug": "autumn",
+      "name": "Autumn Collection",
+      "filters": {
+        "variantAxes": [
+          "size",
+          "color"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
+    },
+    {
+      "slug": "winter",
+      "name": "Winter Collection",
+      "filters": {
+        "variantAxes": [
+          "size"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
+    },
+    {
+      "slug": "spring",
+      "name": "Spring Collection",
+      "filters": {
+        "variantAxes": [
+          "size",
+          "color"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
+    },
+    {
+      "slug": "christmas",
+      "name": "Christmas Collection",
+      "filters": {
+        "variantAxes": [
+          "size"
+        ],
+        "filters": [
+          "material"
+        ]
+      }
     }
   ],
   "shippingMethods": [
@@ -306,6 +356,286 @@
           },
           "basePrice": 890000,
           "stock": 35
+        }
+      ]
+    },
+    {
+      "slug": "plaid-wool-overshirt",
+      "name": "Plaid wool overshirt",
+      "categorySlug": "autumn",
+      "description": "Brushed wool overshirt in a muted plaid, cut for layering. Patch pockets, horn buttons.",
+      "attributes": {
+        "material": "wool"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Plaid wool overshirt"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "SHIRT-PLAID-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 2890000,
+          "stock": 8
+        },
+        {
+          "sku": "SHIRT-PLAID-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 2890000,
+          "stock": 10
+        },
+        {
+          "sku": "SHIRT-PLAID-L",
+          "options": {
+            "size": "L"
+          },
+          "basePrice": 2890000,
+          "stock": 5
+        }
+      ]
+    },
+    {
+      "slug": "leather-crossbody-bag",
+      "name": "Leather crossbody bag",
+      "categorySlug": "autumn",
+      "description": "Vegetable-tanned leather crossbody with an adjustable strap and magnetic clasp.",
+      "attributes": {
+        "material": "leather"
+      },
+      "images": [
+        {
+          "url": "/products/bag.svg",
+          "alt": "Leather crossbody bag"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "BAG-CROSS-TAN",
+          "options": {
+            "color": "Tan"
+          },
+          "basePrice": 2190000,
+          "stock": 12
+        }
+      ]
+    },
+    {
+      "slug": "quilted-puffer-coat",
+      "name": "Quilted puffer coat",
+      "categorySlug": "winter",
+      "description": "Channel-quilted puffer with a down-alternative fill, finished with a storm flap.",
+      "attributes": {
+        "material": "down-fill"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Quilted puffer coat"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "COAT-PUFFER-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 3790000,
+          "stock": 7
+        },
+        {
+          "sku": "COAT-PUFFER-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 3790000,
+          "stock": 9
+        },
+        {
+          "sku": "COAT-PUFFER-L",
+          "options": {
+            "size": "L"
+          },
+          "basePrice": 3790000,
+          "stock": 4
+        }
+      ]
+    },
+    {
+      "slug": "pearl-drop-earrings",
+      "name": "Pearl drop earrings",
+      "categorySlug": "winter",
+      "description": "Freshwater pearl drops on a fine gold-plated hook.",
+      "attributes": {
+        "material": "freshwater pearl"
+      },
+      "images": [
+        {
+          "url": "/products/jewellery.svg",
+          "alt": "Pearl drop earrings"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "EAR-PEARL-SM",
+          "options": {
+            "size": "Small"
+          },
+          "basePrice": 690000,
+          "stock": 30
+        },
+        {
+          "sku": "EAR-PEARL-LG",
+          "options": {
+            "size": "Large"
+          },
+          "basePrice": 790000,
+          "stock": 22
+        }
+      ]
+    },
+    {
+      "slug": "floral-midi-dress",
+      "name": "Floral midi dress",
+      "categorySlug": "spring",
+      "description": "Lightweight cotton midi in a small-scale floral print, with a tie waist.",
+      "attributes": {
+        "material": "cotton"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Floral midi dress"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "DRESS-FLORAL-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 2190000,
+          "stock": 9
+        },
+        {
+          "sku": "DRESS-FLORAL-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 2190000,
+          "stock": 11
+        },
+        {
+          "sku": "DRESS-FLORAL-L",
+          "options": {
+            "size": "L"
+          },
+          "basePrice": 2190000,
+          "stock": 6
+        }
+      ]
+    },
+    {
+      "slug": "woven-straw-tote",
+      "name": "Woven straw tote",
+      "categorySlug": "spring",
+      "description": "Hand-woven straw tote with leather handles, lined in natural cotton.",
+      "attributes": {
+        "material": "straw"
+      },
+      "images": [
+        {
+          "url": "/products/bag.svg",
+          "alt": "Woven straw tote"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "BAG-STRAW-NAT",
+          "options": {
+            "color": "Natural"
+          },
+          "basePrice": 1490000,
+          "stock": 15
+        }
+      ]
+    },
+    {
+      "slug": "red-velvet-blazer",
+      "name": "Red velvet blazer",
+      "categorySlug": "christmas",
+      "description": "Single-breasted blazer in deep red velvet, cut for evening wear.",
+      "attributes": {
+        "material": "velvet"
+      },
+      "images": [
+        {
+          "url": "/products/garment.svg",
+          "alt": "Red velvet blazer"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "BLAZER-VELVET-S",
+          "options": {
+            "size": "S"
+          },
+          "basePrice": 3290000,
+          "stock": 6
+        },
+        {
+          "sku": "BLAZER-VELVET-M",
+          "options": {
+            "size": "M"
+          },
+          "basePrice": 3290000,
+          "stock": 8
+        },
+        {
+          "sku": "BLAZER-VELVET-L",
+          "options": {
+            "size": "L"
+          },
+          "basePrice": 3290000,
+          "stock": 3
+        }
+      ]
+    },
+    {
+      "slug": "gold-charm-bracelet",
+      "name": "Gold charm bracelet",
+      "categorySlug": "christmas",
+      "description": "Gold-plated chain bracelet with a single star charm.",
+      "attributes": {
+        "material": "gold-plated"
+      },
+      "images": [
+        {
+          "url": "/products/jewellery.svg",
+          "alt": "Gold charm bracelet"
+        }
+      ],
+      "variants": [
+        {
+          "sku": "BRACELET-STAR-SM",
+          "options": {
+            "size": "Small"
+          },
+          "basePrice": 590000,
+          "stock": 25
+        },
+        {
+          "sku": "BRACELET-STAR-LG",
+          "options": {
+            "size": "Large"
+          },
+          "basePrice": 650000,
+          "stock": 20
         }
       ]
     }
