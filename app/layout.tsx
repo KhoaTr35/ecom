@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Instrument_Serif, Inter, Geist_Mono } from "next/font/google";
 import { GuestCartProvider } from "@/components/shop/guest-cart-context";
+import { DevModeFrame } from "@/components/dev/dev-mode-frame";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -35,7 +36,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fontSans.variable} ${fontHeading.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <GuestCartProvider>{children}</GuestCartProvider>
+        <DevModeFrame>
+          <GuestCartProvider>{children}</GuestCartProvider>
+        </DevModeFrame>
         <Toaster position="bottom-center" />
       </body>
     </html>

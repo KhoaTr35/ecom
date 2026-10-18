@@ -252,6 +252,19 @@ dùng Neon. Lịch sử migration nằm ở `prisma/migrations/*/migration.sql`.
 | `pnpm exec tsc --noEmit` | Kiểm tra type |
 | `docker compose up -d` / `down [-v]` | Bật/tắt Postgres local (xem phần Cài đặt) |
 
+## Xem layout desktop/mobile song song (dev only)
+
+`pnpm dev` có nút preview layout ở góc dưới-trái mọi trang (icon `</>`,
+`components/dev/dev-mode-frame.tsx`) — bấm vào để xem trang hiện tại trong
+khung iframe, kèm 2 nút chuyển đổi độ rộng **Desktop**/**Mobile** (390px).
+Dùng iframe thay vì chỉ thu nhỏ một `<div>`, vì class `sm:`/`lg:` của
+Tailwind phản ứng theo kích thước **viewport trình duyệt thật**, không phải
+theo bề rộng phần tử cha — iframe có viewport riêng nên mới thật sự kích
+hoạt lại breakpoint mobile. Chuyển qua lại Desktop/Mobile chỉ đổi `width`
+của cùng một iframe, không reload, nên state trong trang không mất khi đổi
+qua đổi lại. Tự ẩn hoàn toàn ở production build (`pnpm build && pnpm start`)
+— đã verify bằng cách build thật rồi kiểm tra nút không còn trong HTML.
+
 ## Kiến trúc tóm tắt
 
 Next.js App Router full-stack, mô hình lai: **đọc bằng Server Components, ghi
@@ -267,5 +280,8 @@ quy ước code xem `AGENTS.md`.
 bước đầu, trang admin có CRUD sản phẩm (xem phần "Quản lý sản phẩm" trên),
 dashboard KPI + funnel đọc dữ liệu thật (có cookie consent gate — xem phần
 "Analytics & cookie consent"), gợi ý "Thường mua cùng" tính từ lịch sử đơn
-thật. Các việc còn lại nằm rải rác trong code dưới dạng comment
-`TODO (IMP-xx)`, tham chiếu đúng task trong kế hoạch.
+thật, 7 danh mục duyệt được qua poster grid + Sidebar trên trang chủ (xem
+phần "Danh mục"), FAQ chat widget hỏi-đáp cố định, và preview layout
+desktop/mobile cho dev (xem 2 phần cuối). Các việc còn lại nằm rải rác
+trong code dưới dạng comment `TODO (IMP-xx)`, tham chiếu đúng task trong
+kế hoạch.
