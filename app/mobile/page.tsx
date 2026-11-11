@@ -13,6 +13,23 @@ const PHONE_ASPECT_RATIO = `${PHONE_WIDTH_PX} / ${PHONE_HEIGHT_PX}`;
 // Island with clearance — see the comment at the frame below for why this
 // has to be reserved space rather than an overlay.
 const STATUS_BAR_HEIGHT_PX = 36;
+// Correction for a real display-density mismatch, not a sizing bug: 402 CSS
+// px is the *correct* width for the app's own `lg:` breakpoint logic inside
+// the iframe, but a laptop screen renders CSS pixels far less densely than
+// an iPhone does — Apple's "point" unit is calibrated to roughly 160
+// CSS-dpi-equivalent, while a typical laptop/Mac display renders closer to
+// 100-110 — so identical text and UI ends up looking noticeably larger on a
+// laptop than it ever would held in your hand. `zoom` (not
+// `transform: scale`) corrects this: it shrinks the rendered output and its
+// layout footprint together, without changing what the embedded document
+// measures internally — the page inside still genuinely believes it's
+// 402 CSS px wide, so the mobile breakpoint stays correctly triggered.
+// Applied to the whole bezel, not just the iframe, so the border/status-bar
+// chrome shrinks in the same proportion as the screen rather than looking
+// oversized next to it. 0.72 ≈ 110/160 as a starting point; it's a visual
+// calibration against one physical screen, so nudge this constant if it
+// still looks off on yours.
+const DEMO_ZOOM = 0.72;
 
 /**
  * Demo route: the real site, framed at iPhone 16 Pro width, so the
@@ -48,7 +65,10 @@ export default function MobilePreviewPage() {
           + one border-radius here (not on the children individually) clips
           the status-bar strip and the iframe into a single rounded phone
           shape, so their corners can't mismatch. */}
-      <div className="relative inline-flex flex-col overflow-hidden rounded-[2.5rem] border-[10px] border-foreground/90 bg-foreground/90 shadow-xl">
+      <div
+        className="relative inline-flex flex-col overflow-hidden rounded-[2.5rem] border-[10px] border-foreground/90 bg-foreground/90 shadow-xl"
+        style={{ zoom: DEMO_ZOOM }}
+      >
         {/* Status-bar strip, reserved space above the iframe — not an
             overlay on top of it. An earlier version absolute-positioned the
             Dynamic Island over the iframe's own top edge, which worked by
