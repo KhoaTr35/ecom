@@ -21,10 +21,10 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
   const user = await getCurrentUser(await headers());
   const [categories, { items }, feed] = await Promise.all([
     listCategories(),
-    // Scoped to new-arrivals, matching the hero CTA and the "New Arrivals"
-    // heading below — listProducts() with no categorySlug was pulling every
-    // category in here, which the heading didn't actually say.
-    listProducts({ categorySlug: "new-arrivals" }),
+    // Every active product, not just new-arrivals — the mobile Feed below
+    // already draws from the whole catalogue, and this grid previously
+    // under-represented it by scoping to one category.
+    listProducts({ pageSize: 100 }),
     listFeedItems({ scope, userId: user?.id ?? null }),
   ]);
   const categoryCounts = await Promise.all(
@@ -81,9 +81,9 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
             <section className="mx-auto max-w-7xl px-5 py-20 sm:px-8 sm:py-28">
               <div className="mb-10 flex items-baseline justify-between border-b border-border pb-5">
-                <h2 className="label-eyebrow text-foreground">New Arrivals</h2>
+                <h2 className="label-eyebrow text-foreground">All Products</h2>
                 <Link
-                  href="/c/new-arrivals"
+                  href="/wall"
                   className="label-eyebrow text-muted-foreground underline-offset-4 transition-colors hover:text-foreground hover:underline"
                 >
                   View all

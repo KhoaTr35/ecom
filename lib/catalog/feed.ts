@@ -49,9 +49,14 @@ export function interleaveFeed(products: FeedProduct[], reels: FeedCollectionRee
 /** Builds one feed page: priced products for `scope`, interleaved with
  * collection reels drawn from categories that have reel copy (decision 1 —
  * `tagline`/`heroMediaUrl` are the only new columns, both nullable). */
+// Course-project scale: fetching the whole catalogue in one page keeps the
+// Feed showing every product rather than truncating to an arbitrary cap —
+// desktop's "All Products" grid uses the same unpaginated approach.
+const DEFAULT_FEED_PAGE_SIZE = 100;
+
 export async function listFeedItems(params: { page?: number; pageSize?: number; scope?: FeedScope; userId?: string | null }) {
   const page = params.page ?? 1;
-  const pageSize = params.pageSize ?? 12;
+  const pageSize = params.pageSize ?? DEFAULT_FEED_PAGE_SIZE;
   const scope = params.scope ?? "for-you";
   const now = new Date();
   const pricingOpts = { userId: params.userId ?? null, now };

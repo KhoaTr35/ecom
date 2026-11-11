@@ -4,6 +4,7 @@ import { toProductCards } from "@/lib/catalog/product-pricing";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CollectionPosterGrid } from "@/components/shop/collection-poster-grid";
+import { ProductCard } from "@/components/shop/product-card";
 import { WallProfileHeader } from "@/components/shop/mobile/wall-profile-header";
 import { WallCollectionHighlights } from "@/components/shop/mobile/wall-collection-highlights";
 import { WallTileGrid } from "@/components/shop/mobile/wall-tile-grid";
@@ -63,6 +64,17 @@ export default async function WallPage() {
           <h1 className="font-heading text-5xl leading-tight">Collections</h1>
           <div className="mt-10">
             <CollectionPosterGrid collections={sidebarCategories} />
+          </div>
+
+          <div className="mt-20 border-t border-border pt-20">
+            <h2 className="label-eyebrow border-b border-border pb-5 text-foreground">
+              All pieces · {tiles.length}
+            </h2>
+            <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+              {tiles.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
