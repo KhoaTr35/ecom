@@ -76,6 +76,9 @@ export type ProductCardData = {
   fromPrice: number;
   fromBase: number;
   inStock: boolean;
+  /** Drives the Wall's "multi-image" marker — there is no `reel` video
+   * field (plan decision 2), so this is the honest substitute. */
+  imageCount: number;
 };
 
 /**
@@ -108,6 +111,7 @@ export async function toProductCards(
       fromPrice: Math.min(...quotable.map((v) => v.unitFinal)),
       fromBase: Math.min(...quotable.map((v) => v.unitBase)),
       inStock,
+      imageCount: product.images.length,
     };
   });
 }

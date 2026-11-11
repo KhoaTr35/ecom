@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Atelier — Mobile UI Screen Flow</title>
+<link rel="stylesheet" href="ui-flow.css" />
+</head>
+<body>
+<div class="doc">
+
+  <div class="doc-header">
+    <span class="eb">Atelier · CO3027 course project</span>
+    <h1>Mobile UI — screen flow</h1>
+    <p>"Reel commerce" at mobile width (&lt;lg breakpoint): a full-screen product feed (swipe up/down) that
+      swipes right into an Instagram-profile-style Wall, plus a 5-tab bottom bar (Feed · Wall · Search · Bag · Me)
+      replacing the hamburger menu and header icons. Transactional screens (cart, checkout, account, legal) keep the
+      same single-column forms as the <a href="ui-flow-web.html">web flow</a>, just with mobile chrome around them.
+      Reflects the actual <code>app/(shop)</code> / <code>app/(auth)</code> layout and
+      <code>components/shop/mobile/</code>.</p>
+    <div class="legend">
+      <span><span class="swatch"></span> primary flow</span>
+      <span><span class="swatch dashed"></span> conditional / global link</span>
+    </div>
+  </div>
+
+  <div class="flow">
+
+    <!-- 1. FEED -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/</span><div class="name">Feed — product reel</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/</div>
+        <div class="screen dark">
+          <div class="scope-tabs"><span class="active">For you</span><span>New in</span><span>Sale</span></div>
+          <div class="feed-media">
+            <div class="story-bars" style="position:absolute;top:10px;left:8px;right:8px">
+              <span class="active"></span><span class="active"></span><span></span><span></span>
+            </div>
+            <div class="feed-rail">
+              <div class="pill" style="width:34px;height:34px;border:2px solid #fff;font-family:Georgia,serif">A</div>
+              <div class="pill">+</div>
+              <div class="pill">i</div>
+              <div class="pill">⤴</div>
+            </div>
+          </div>
+          <div class="feed-caption">
+            <span class="eb" style="color:rgba(255,255,255,.75)">New Arrivals · AW26</span>
+            <h1 class="h1" style="font-size:24px;margin-top:6px;color:#fff">Wool Overcoat</h1>
+            <p style="font-size:12px;margin-top:6px">4.200.000 ₫ <span class="muted strike" style="font-size:10px;margin-left:4px;color:rgba(255,255,255,.6)">4.800.000 ₫</span> <span class="badge" style="background:rgba(255,255,255,.2);color:#fff">End of season markdown</span></p>
+            <div class="toggle-row" style="margin-top:8px">
+              <span class="toggle-pill" style="border-color:rgba(255,255,255,.4);color:#fff">S</span>
+              <span class="toggle-pill selected">M</span>
+              <span class="toggle-pill" style="border-color:rgba(255,255,255,.4);color:#fff">L</span>
+              <span class="toggle-pill disabled" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.5)">XL</span>
+            </div>
+            <div class="btn block" style="margin-top:10px">Add to bag · M</div>
+          </div>
+          <div class="tabbar on-dark">
+            <div class="tab active"><span class="ic">▶</span>Feed</div>
+            <div class="tab"><span class="ic">▦</span>Wall</div>
+            <div class="tab"><span class="ic">◎</span>Search</div>
+            <div class="tab"><span class="ic">⬙</span>Bag</div>
+            <div class="tab"><span class="ic">◠</span>Me</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Left-edge "Wall" tab + swipe right → Wall. "+" on the rail opens the quick-add sheet (size
+        grid, same add-to-bag as below) without leaving the reel. Every 4th slide is a collection reel: tagline +
+        headline from <code>Category.tagline</code>/<code>heroMediaUrl</code>, a real 3-product strip, "Shop the
+        collection" / "Play as reel".</p>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">swipe right / tap "Wall"</div></div>
+
+    <!-- 2. WALL -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/wall</span><div class="name">The Wall — profile grid</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/wall</div>
+        <div class="screen pad-sm" style="padding-bottom:0">
+          <div class="wall-head" style="padding:0">
+            <div class="wall-avatar">A</div>
+            <div class="wall-stats">
+              <div><span class="n">14</span><span class="l">pieces</span></div>
+              <div><span class="n">7</span><span class="l">collections</span></div>
+              <div><span class="n">AW26</span><span class="l">season</span></div>
+            </div>
+          </div>
+          <p style="font-size:11px;margin-top:10px;line-height:1.5">Considered pieces, <i>built to last</i>. A pared-back wardrobe of tailoring, knitwear and accessories.</p>
+          <div class="btn block" style="margin-top:10px">Shop the collection</div>
+        </div>
+        <div class="story-row">
+          <div class="story"><div class="ring"><span>N</span></div>New Arrivals</div>
+          <div class="story"><div class="ring"><span>R</span></div>Ready-to-Wear</div>
+          <div class="story"><div class="ring"><span>A</span></div>Accessories</div>
+          <div class="story"><div class="ring"><span>W</span></div>Winter</div>
+        </div>
+        <div style="display:flex;justify-content:space-around;border-top:1px solid var(--border);padding:8px 0" class="eb">
+          <span class="dark" style="border-bottom:2px solid var(--fg);padding-bottom:4px">All · 14</span>
+          <span>Multi-image · 14</span>
+          <span>On sale · 3</span>
+        </div>
+        <div class="tile-grid">
+          <div class="tile"><span class="price-chip">4.200.000 ₫</span></div>
+          <div class="tile"><span class="price-chip">1.450.000 ₫</span></div>
+          <div class="tile"><span class="price-chip">2.300.000 ₫</span></div>
+          <div class="tile"><span class="price-chip">890.000 ₫</span></div>
+          <div class="tile"><span class="price-chip">3.600.000 ₫</span></div>
+          <div class="tile"><span class="price-chip">1.650.000 ₫</span></div>
+        </div>
+        <div class="tabbar">
+          <div class="tab"><span class="ic">▶</span>Feed</div>
+          <div class="tab active"><span class="ic">▦</span>Wall</div>
+          <div class="tab"><span class="ic">◎</span>Search</div>
+          <div class="tab"><span class="ic">⬙</span>Bag</div>
+          <div class="tab"><span class="ic">◠</span>Me</div>
+        </div>
+      </div>
+      <p class="note">Stats and tabs are all derived (active product count, <code>listCategories().length</code>,
+        sale = <code>fromPrice &lt; fromBase</code>) — nothing hardcoded. "Multi-image" stands in for the design's
+        "Reels" tab: no video field exists, so the honest signal is <code>images.length &gt; 1</code>. Desktop at
+        this route renders the same <code>CollectionPosterGrid</code> the homepage uses.</p>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">tap a collection circle / tile</div></div>
+
+    <!-- 3. CATEGORY + SEARCH BRANCH -->
+    <div class="stage">
+      <div class="branch-row">
+        <div>
+          <div class="stage-label"><span class="route">/c/new-arrivals</span><div class="name">Collection wall</div></div>
+          <div class="frame mobile">
+            <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+            <div class="chrome-mobile-url">atelier.shop/c/new-arrivals</div>
+            <div class="screen pad-sm">
+              <div class="muted" style="font-size:9px">‹ Wall</div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px">
+                <h1 class="h1" style="font-size:20px">New Arrivals</h1>
+                <span class="btn sm" style="border-radius:999px">▶ Play as reel</span>
+              </div>
+            </div>
+            <div class="chip-scroll">
+              <span class="chip active">⚙ Filters</span>
+              <span class="chip solid">Size: S ✕</span>
+              <span class="chip">Newest ⌄</span>
+            </div>
+            <div class="pad-sm">
+              <div class="grid cols-2">
+                <div class="pcard"><div class="ph"></div><p class="pname">Wool Overcoat</p><p class="pprice">4.200.000 ₫</p></div>
+                <div class="pcard"><div class="ph"></div><p class="pname">Wide-leg Trouser</p><p class="pprice">2.300.000 ₫</p></div>
+              </div>
+              <div class="btn outline block" style="margin-top:14px">Load more</div>
+            </div>
+          </div>
+        </div>
+        <div class="branch-connector"><span class="arrow">⇄</span><span>search icon / tab, any screen</span></div>
+        <div>
+          <div class="stage-label"><span class="route">/search?q=coat</span><div class="name">Search</div></div>
+          <div class="frame mobile">
+            <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+            <div class="chrome-mobile-url">atelier.shop/search?q=coat</div>
+            <div class="screen pad-sm">
+              <div class="field" style="margin-bottom:8px"><div class="input" style="border-radius:999px">⌕ coat</div></div>
+              <div class="chip-row" style="margin-top:0"><span class="eb" style="margin-right:2px">Recent</span><span class="chip">wool coat</span><span class="chip">scarf</span></div>
+              <h1 class="h1" style="font-size:18px;margin-top:10px;padding-bottom:8px;border-bottom:1px solid var(--border)">Results for "coat"</h1>
+              <div class="grid cols-2" style="margin-top:10px">
+                <div class="pcard"><div class="ph"></div><p class="pname">Wool Overcoat</p><p class="pprice">4.200.000 ₫</p></div>
+                <div class="pcard"><div class="ph"></div><p class="pname">Trench Coat</p><p class="pprice">3.600.000 ₫</p></div>
+              </div>
+              <p class="note">No query → recent searches + "Browse collections" row only.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note">The filter chip opens a bottom sheet (sort pills + the same facet checkboxes as the desktop
+        sidebar — <code>CategoryFilterSidebar</code> reused, not reimplemented); both write the identical query
+        string (<code>?size=S&amp;sort=...</code>) so a shared link works at either breakpoint.</p>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">tap a product</div></div>
+
+    <!-- 4. PRODUCT -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/p/wool-overcoat</span><div class="name">Product detail</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/p/wool-overcoat</div>
+        <div class="screen">
+          <div style="aspect-ratio:3/4;background:repeating-linear-gradient(135deg,#2b2724,#2b2724 14px,#332e2a 14px,#332e2a 28px);position:relative">
+            <div class="story-bars" style="position:absolute;top:10px;left:8px;right:8px"><span class="active"></span><span></span><span></span></div>
+          </div>
+          <div class="pad-sm" style="margin-top:-14px;background:#fff;border-radius:14px 14px 0 0;position:relative">
+            <div class="muted" style="font-size:9px">New Arrivals ›</div>
+            <h1 class="h1" style="font-size:22px;margin-top:6px">Wool Overcoat</h1>
+            <p style="font-size:14px;margin-top:8px">4.200.000 ₫ <span class="muted strike" style="font-size:11px;margin-left:6px">4.800.000 ₫</span></p>
+            <div style="margin-top:14px">
+              <div class="eb">Size</div>
+              <div class="toggle-row" style="margin-top:8px">
+                <span class="toggle-pill">S</span><span class="toggle-pill selected">M</span><span class="toggle-pill">L</span><span class="toggle-pill disabled">XL</span>
+              </div>
+            </div>
+            <div class="accordion-row" style="margin-top:16px">
+              <div class="trigger"><span>Description</span><span>⌄</span></div>
+              <div class="body">A relaxed wool coat, mid-weight brushed fabric, horn buttons.</div>
+            </div>
+            <div class="accordion-row"><div class="trigger"><span>Shipping &amp; returns</span><span>⌃</span></div></div>
+            <div class="h2" style="margin-top:14px">Frequently bought together</div>
+            <div class="grid cols-2" style="margin-top:10px">
+              <div class="pcard"><div class="ph"></div><p class="pname">Merino Crewneck</p><p class="pprice">1.450.000 ₫</p></div>
+              <div class="pcard"><div class="ph"></div><p class="pname">Leather Belt</p><p class="pprice">890.000 ₫</p></div>
+            </div>
+          </div>
+          <div class="sticky-cta">
+            <div class="totals">Size M<span class="amt">4.200.000 ₫</span></div>
+            <div class="btn block" style="flex:1">Add to bag</div>
+          </div>
+          <div class="tabbar">
+            <div class="tab"><span class="ic">▶</span>Feed</div><div class="tab"><span class="ic">▦</span>Wall</div><div class="tab"><span class="ic">◎</span>Search</div><div class="tab"><span class="ic">⬙</span>Bag</div><div class="tab"><span class="ic">◠</span>Me</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Gallery is the same story-bar component as the Feed (<code>FeedStoryMedia</code>), reused here
+        for product images. Size grid and add-to-bag is the exact desktop <code>ProductPurchasePanel</code>, just
+        made controllable so the sticky bar below can mirror the selected size's price.</p>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">"Add to bag" → tap bag tab</div></div>
+
+    <!-- 5. CART -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/cart</span><div class="name">Bag</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/cart</div>
+        <div class="screen pad-sm">
+          <div class="muted" style="font-size:9px">‹ Feed</div>
+          <h1 class="h1" style="font-size:20px;margin-top:8px">Bag · 2 items</h1>
+          <div style="margin-top:12px">
+            <div class="wf-row" style="align-items:center;gap:12px">
+              <div style="width:52px;height:68px;border-radius:6px;background:var(--muted-bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px">⬙</div>
+              <div style="flex:1">
+                <div style="display:flex;justify-content:space-between"><p style="margin:0">Wool Overcoat</p><p style="margin:0">4.200.000 ₫</p></div>
+                <p class="muted" style="margin:2px 0 0;font-size:9px">4.200.000 ₫ each</p>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+                  <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:6px;padding:2px 6px">
+                    <span>−</span><span style="font-size:10px">1</span><span>+</span>
+                  </div>
+                  <span class="muted" style="font-size:9px;text-decoration:underline">Remove</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sticky-cta" style="border-top:1px solid var(--border)">
+            <div class="totals">Subtotal<span class="amt">5.980.000 ₫</span></div>
+            <div class="btn block" style="flex:1">Proceed to checkout</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Qty stepper + plain "Remove" instead of a number input and a confirm dialog — the mobile-only
+        <code>MobileBagList</code>; same <code>useGuestCart</code>/<code>/api/cart/quote</code> underneath as desktop.</p>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">"Proceed to checkout"</div></div>
+
+    <!-- 6. CHECKOUT + AUTH GATE -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/checkout</span><div class="name">Checkout</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/checkout</div>
+        <div class="screen pad-sm">
+          <div class="muted" style="font-size:9px">‹ Bag</div>
+          <h1 class="h1" style="font-size:20px;margin-top:8px">Checkout</h1>
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <div style="flex:1"><div style="height:3px;background:var(--fg);border-radius:2px"></div><span style="font-size:9px;font-weight:600">1 Address</span></div>
+            <div style="flex:1"><div style="height:3px;background:var(--fg);border-radius:2px"></div><span style="font-size:9px;font-weight:600">2 Delivery</span></div>
+            <div style="flex:1"><div style="height:3px;background:var(--fg);border-radius:2px"></div><span style="font-size:9px;font-weight:600">3 Payment</span></div>
+          </div>
+          <div class="radio-row" style="margin-top:12px;justify-content:space-between"><span>2 items</span><span style="font-weight:600">5.980.000 ₫</span><span>⌄</span></div>
+          <div class="h2" style="margin-top:14px">Delivery address</div>
+          <div style="margin-top:10px">
+            <div class="radio-row checked"><div class="radio-dot"></div><div><b style="font-weight:600">Nguyen Van A</b><br><span class="muted">12 Le Loi, Ben Nghe, HCMC</span></div></div>
+          </div>
+          <div class="h2" style="margin-top:14px">Payment</div>
+          <div style="margin-top:10px">
+            <div class="radio-row checked"><div class="radio-dot"></div><span>Cash on delivery (COD)</span></div>
+          </div>
+          <div class="sticky-cta">
+            <div class="totals">Total<span class="amt">6.010.000 ₫</span></div>
+            <div class="btn block" style="flex:1">Place order</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="connector branch-out"><div class="line dashed"></div><div class="label">no session → redirects to /login?callbackUrl=/checkout</div></div>
+
+      <div class="branch-row">
+        <div>
+          <div class="stage-label"><span class="route">/login</span><div class="name">Sign in</div></div>
+          <div class="frame mobile">
+            <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+            <div class="chrome-mobile-url">atelier.shop/login</div>
+            <div class="screen pad-sm" style="text-align:center;padding-top:28px;padding-bottom:28px">
+              <div style="text-align:left;font-size:10px" class="muted">Cancel</div>
+              <div class="logo" style="font-size:10px;margin-top:10px">Atelier</div>
+              <h1 class="h1" style="font-size:20px;margin-top:14px">Sign in</h1>
+              <p class="muted" style="font-size:9px;margin-top:6px">Your bag is saved. You'll be back right after.</p>
+              <div style="text-align:left;margin-top:16px">
+                <div class="field"><label>Email</label><div class="input"></div></div>
+                <div class="field"><label>Password</label><div class="input"></div></div>
+              </div>
+              <div class="btn block">Sign in</div>
+              <p class="muted" style="font-size:9px;margin-top:12px">No account? <u>Create one</u></p>
+            </div>
+          </div>
+        </div>
+        <div class="branch-connector"><span class="arrow">⇄</span><span>"Create one" / "Sign in"</span></div>
+        <div>
+          <div class="stage-label"><span class="route">/register</span><div class="name">Create account</div></div>
+          <div class="frame mobile">
+            <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+            <div class="chrome-mobile-url">atelier.shop/register</div>
+            <div class="screen pad-sm" style="text-align:center;padding-top:28px;padding-bottom:28px">
+              <div style="text-align:left;font-size:10px" class="muted">Cancel</div>
+              <div class="logo" style="font-size:10px;margin-top:10px">Atelier</div>
+              <h1 class="h1" style="font-size:20px;margin-top:14px">Create account</h1>
+              <p class="muted" style="font-size:9px;margin-top:6px">Track orders, save addresses and check out faster.</p>
+              <div style="text-align:left;margin-top:16px">
+                <div class="field"><label>Full name</label><div class="input"></div></div>
+                <div class="field"><label>Email</label><div class="input"></div></div>
+                <div class="field"><label>Password</label><div class="input"></div></div>
+              </div>
+              <div class="btn block">Create account</div>
+              <p class="muted" style="font-size:9px;margin-top:12px">Already registered? <u>Sign in</u></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Sign-in success returns to /checkout (callbackUrl); register success goes to Feed.</p>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">"Place order"</div></div>
+
+    <!-- 7. CHECKOUT RESULT -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/checkout/result?order=ORDMWBLZRSN</span><div class="name">Order confirmation</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/checkout/result</div>
+        <div class="screen pad-sm" style="text-align:center;padding-top:36px;padding-bottom:36px">
+          <span class="eb">Thank you</span>
+          <h1 class="h1" style="font-size:22px;margin-top:12px">Order placed</h1>
+          <p class="muted" style="margin-top:8px">Order <code>ORDMWBLZRSN</code></p>
+          <div class="btn" style="margin-top:16px">View my orders</div>
+          <p class="muted" style="font-size:10px;margin-top:10px;text-decoration:underline">Keep browsing</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="line"></div><div class="arrow-down"></div><div class="label">"View my orders" / tap Me tab</div></div>
+
+    <!-- 8. ACCOUNT ORDERS / SETTINGS -->
+    <div class="stage">
+      <div class="branch-row">
+        <div>
+          <div class="stage-label"><span class="route">/account/orders</span><div class="name">Me — orders</div></div>
+          <div class="frame mobile">
+            <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+            <div class="chrome-mobile-url">atelier.shop/account/orders</div>
+            <div class="screen pad-sm">
+              <div class="wall-head" style="padding:0">
+                <div class="wall-avatar" style="background:var(--muted-bg);color:var(--fg);border:1px solid var(--border)">NA</div>
+                <div class="wall-stats">
+                  <div><span class="n">3</span><span class="l">orders</span></div>
+                  <div><span class="n">1</span><span class="l">in progress</span></div>
+                  <div><span class="n">1</span><span class="l">address</span></div>
+                </div>
+              </div>
+              <div class="btn outline block sm" style="margin-top:10px">Edit profile</div>
+              <div style="display:flex;gap:16px;border-bottom:1px solid var(--border);margin-top:12px;padding-bottom:8px" class="eb">
+                <span style="border-bottom:2px solid var(--fg);padding-bottom:8px;color:var(--fg)">Orders</span><span>Settings</span>
+              </div>
+              <div style="margin-top:10px">
+                <div class="wf-row" style="flex-direction:column;align-items:stretch;gap:6px;border:1px solid var(--border);border-radius:10px;padding:10px;border-top:1px solid var(--border)">
+                  <p style="margin:0;font-family:monospace;font-size:10px">ORDMWBLZRSN · 1.342.000 ₫</p>
+                  <div class="progress-track"><div class="progress-fill" style="width:33%"></div></div>
+                  <p class="muted" style="font-size:9px;margin:0">Processing</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="branch-connector"><span class="arrow">⇄</span><span>Orders / Settings tabs</span></div>
+        <div>
+          <div class="stage-label"><span class="route">/account/settings</span><div class="name">Me — settings</div></div>
+          <div class="frame mobile">
+            <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+            <div class="chrome-mobile-url">atelier.shop/account/settings</div>
+            <div class="screen pad-sm">
+              <div style="display:flex;gap:16px;border-bottom:1px solid var(--border);padding-bottom:8px" class="eb">
+                <span>Orders</span><span style="border-bottom:2px solid var(--fg);padding-bottom:8px;color:var(--fg)">Settings</span>
+              </div>
+              <div class="h2" style="margin-top:16px">Profile</div>
+              <div style="margin-top:10px">
+                <div class="field"><label>Name</label><div class="input">Nguyen Van A</div></div>
+                <div class="field"><label>Email</label><div class="input disabled">a@example.com</div></div>
+                <span class="btn sm">Save</span>
+              </div>
+              <div class="h2" style="margin-top:18px">Addresses</div>
+              <div style="margin-top:10px">
+                <div class="wf-row" style="flex-direction:column;align-items:stretch;gap:6px">
+                  <p style="margin:0">Nguyen Van A <span class="badge" style="margin-left:6px">Default</span></p>
+                  <p class="muted" style="margin:0">12 Le Loi, Ben Nghe, HCMC</p>
+                  <div style="display:flex;gap:6px"><span class="btn sm outline">Edit</span><span class="btn sm outline">Delete</span></div>
+                </div>
+              </div>
+              <div class="h2" style="margin-top:18px">Information</div>
+              <div class="muted" style="margin-top:8px;font-size:10px;line-height:2">Return policy<br>Shipping policy<br>Payment policy<br>Privacy</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="satellite-link">
+      <div class="line"></div>
+      <span>"Information" link · any account/legal screen</span>
+    </div>
+
+    <!-- 9. LEGAL CLUSTER -->
+    <div class="stage">
+      <div class="stage-label"><span class="route">/return-policy · /shipping-policy · /payment-policy · /privacy</span><div class="name">Legal / info pages (4 routes, shared layout)</div></div>
+      <div class="frame mobile">
+        <div class="chrome-mobile-top"><span>9:41</span><span>●●●</span></div>
+        <div class="chrome-mobile-url">atelier.shop/return-policy</div>
+        <div class="screen pad-sm">
+          <div class="muted" style="font-size:9px">‹ </div>
+          <div class="chip-row" style="margin-top:8px">
+            <span class="chip active">Return</span><span class="chip">Shipping</span><span class="chip">Payment</span><span class="chip">Privacy</span>
+          </div>
+          <h1 class="h1" style="font-size:18px;margin-top:14px">Return policy</h1>
+          <p class="muted" style="margin-top:8px;line-height:1.6">Demo content for a course project (CO3027) — this website is not a real commercial store.</p>
+        </div>
+      </div>
+      <p class="note">Pill tabs are plain links between the four real routes (<code>app/(shop)/(legal)/layout.tsx</code>
+        + <code>MobileInfoTabs</code>), not client-side tab state.</p>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

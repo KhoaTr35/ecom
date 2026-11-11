@@ -39,6 +39,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-feed: var(--feed);
+  --color-feed-foreground: var(--feed-foreground);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -84,6 +86,10 @@
   --sidebar-accent-foreground: #0a0a0a;
   --sidebar-border: #e4e4e7;
   --sidebar-ring: #0a0a0a;
+  /* Mobile Feed/reel ground — intentionally dark in both themes, so it is
+     not redefined under .dark below. */
+  --feed: #1c1a18;
+  --feed-foreground: #ffffff;
 }
 
 .dark {

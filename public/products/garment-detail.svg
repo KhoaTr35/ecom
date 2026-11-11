@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Close crop: lapel, horn button, pocket -->
+    <path d="M230 160 L330 210 L300 420 L210 380 Z"/>
+    <circle cx="258" cy="300" r="14"/>
+    <path d="M190 520 h140 v90 h-140 z"/>
+  </g>
+</svg>

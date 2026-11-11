@@ -84,7 +84,7 @@ export function FaqChatWidget() {
         render={
           <Button
             size="icon-lg"
-            className="fixed bottom-6 right-6 z-50 size-12 rounded-full shadow-lg"
+            className="fixed bottom-24 right-6 z-50 size-12 rounded-full shadow-lg lg:bottom-6"
             aria-label="Help"
           >
             <MessageCircle />

@@ -2,9 +2,11 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useSession } from "@/lib/auth/client";
 import { AddressManager } from "@/components/shop/address-manager";
 import { ProfileForm } from "@/components/shop/profile-form";
+import { INFO_LINKS } from "@/components/shop/nav-links";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AccountSettingsPage() {
@@ -35,6 +37,19 @@ export default function AccountSettingsPage() {
 
           <section className="mt-12">
             <AddressManager />
+          </section>
+
+          <section className="mt-12">
+            <h2 className="label-eyebrow border-b border-border pb-4 text-foreground">Information</h2>
+            <ul className="mt-2">
+              {INFO_LINKS.map((link) => (
+                <li key={link.href} className="border-b border-border/60 last:border-b-0">
+                  <Link href={link.href} className="flex min-h-12 items-center justify-between text-sm">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
         </>
       )}

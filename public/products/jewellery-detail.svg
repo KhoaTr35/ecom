@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="3" stroke-linecap="round">
+    <!-- Close crop on a single hoop + hinge bar -->
+    <circle cx="300" cy="420" r="150"/>
+    <path d="M250 274 h100"/>
+  </g>
+</svg>

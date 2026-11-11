@@ -30,3 +30,9 @@ lib/generated/
 
 # MCP server config — the Supabase entry embeds an access token in its URL
 .mcp.json
+
+# AI tooling (local only, not part of the app)
+/plans
+AGENTS.md
+/.agents
+/.claude

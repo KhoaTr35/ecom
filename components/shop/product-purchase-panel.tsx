@@ -10,19 +10,28 @@ import type { PricedVariant } from "@/lib/catalog/product-pricing";
 import { formatVnd } from "@/lib/utils";
 import { cn } from "cn";
 
-/** Variant selection plus the price and add-to-bag action it drives. */
+/** Variant selection plus the price and add-to-bag action it drives.
+ * Uncontrolled by default; pass `selectedId`/`onSelectedIdChange` to share
+ * the selection with another piece of UI (the mobile product page's sticky
+ * action bar mirrors the price for whichever size is picked here). */
 export function ProductPurchasePanel({
   variants,
   axisLabel,
+  selectedId: controlledId,
+  onSelectedIdChange,
 }: {
   variants: PricedVariant[];
   axisLabel: string;
+  selectedId?: string;
+  onSelectedIdChange?: (id: string) => void;
 }) {
   const { addItem } = useGuestCart();
   // Default to the first purchasable variant so the price shown is one you can buy.
-  const [selectedId, setSelectedId] = useState(
+  const [internalId, setInternalId] = useState(
     () => variants.find((v) => v.stock > 0)?.id ?? variants[0]?.id ?? "",
   );
+  const selectedId = controlledId ?? internalId;
+  const setSelectedId = onSelectedIdChange ?? setInternalId;
 
   const selected = variants.find((v) => v.id === selectedId);
   const soldOut = !selected || selected.stock === 0;
@@ -69,7 +78,7 @@ export function ProductPurchasePanel({
                       "cursor-not-allowed border-border bg-transparent text-muted-foreground line-through hover:bg-transparent",
                     available &&
                       isSelected &&
-                      "border-foreground bg-foreground text-background hover:bg-foreground hover:text-background",
+                      "border-foreground font-semibold data-[state=on]:bg-muted data-[state=on]:text-foreground hover:bg-muted hover:text-foreground",
                     available &&
                       !isSelected &&
                       "border-border bg-transparent hover:border-foreground hover:bg-transparent hover:text-foreground",

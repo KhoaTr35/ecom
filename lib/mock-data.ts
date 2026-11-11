@@ -9,6 +9,8 @@ export const mockCategories = seedData.categories.map((c, i) => ({
   slug: c.slug,
   name: c.name,
   filters: c.filters,
+  tagline: c.tagline as string | null,
+  heroMediaUrl: c.heroMediaUrl as string | null,
 }));
 
 const categoryIdBySlug = new Map(mockCategories.map((c) => [c.slug, c.id]));

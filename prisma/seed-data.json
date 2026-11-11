@@ -1,669 +1,783 @@
 {
-  "categories": [
+ "categories": [
+  {
+   "slug": "new-arrivals",
+   "name": "New Arrivals",
+   "filters": {
+    "variantAxes": [
+     "size"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "Considered pieces, built to last — tailoring, knitwear and accessories in small runs.",
+   "heroMediaUrl": "/collections/new-arrivals.svg"
+  },
+  {
+   "slug": "ready-to-wear",
+   "name": "Ready-to-Wear",
+   "filters": {
+    "variantAxes": [
+     "size"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "Everyday staples cut for movement, in natural fibres that earn their keep.",
+   "heroMediaUrl": "/collections/ready-to-wear.svg"
+  },
+  {
+   "slug": "accessories",
+   "name": "Accessories",
+   "filters": {
+    "variantAxes": [
+     "size",
+     "color"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "The finishing details — bags, jewellery and leather goods made to last seasons.",
+   "heroMediaUrl": "/collections/accessories.svg"
+  },
+  {
+   "slug": "autumn",
+   "name": "Autumn Collection",
+   "filters": {
+    "variantAxes": [
+     "size",
+     "color"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "Layered knits and brushed wool for the first cold mornings.",
+   "heroMediaUrl": "/collections/autumn.svg"
+  },
+  {
+   "slug": "winter",
+   "name": "Winter Collection",
+   "filters": {
+    "variantAxes": [
+     "size"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "Insulated outerwear and pearl accents for the deep season.",
+   "heroMediaUrl": "/collections/winter.svg"
+  },
+  {
+   "slug": "spring",
+   "name": "Spring Collection",
+   "filters": {
+    "variantAxes": [
+     "size",
+     "color"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "Lighter fabrics and florals as the wardrobe turns over.",
+   "heroMediaUrl": "/collections/spring.svg"
+  },
+  {
+   "slug": "christmas",
+   "name": "Christmas Collection",
+   "filters": {
+    "variantAxes": [
+     "size"
+    ],
+    "filters": [
+     "material"
+    ]
+   },
+   "tagline": "Evening pieces in velvet and gold for the holiday run.",
+   "heroMediaUrl": "/collections/christmas.svg"
+  }
+ ],
+ "shippingMethods": [
+  {
+   "code": "STANDARD",
+   "name": "Standard delivery",
+   "fee": 30000,
+   "etaDaysMin": 3,
+   "etaDaysMax": 5,
+   "freeFrom": 1000000
+  },
+  {
+   "code": "EXPRESS",
+   "name": "Express delivery (city center only)",
+   "fee": 50000,
+   "etaDaysMin": 1,
+   "etaDaysMax": 2,
+   "freeFrom": null
+  },
+  {
+   "code": "PICKUP",
+   "name": "Boutique pickup",
+   "fee": 0,
+   "etaDaysMin": 0,
+   "etaDaysMax": 0,
+   "freeFrom": null
+  }
+ ],
+ "priceRules": [
+  {
+   "name": "Evening edit 8-10pm",
+   "type": "TIME_WINDOW",
+   "condition": {
+    "start": "20:00",
+    "end": "22:00"
+   },
+   "percentOff": 10,
+   "priority": 1
+  },
+  {
+   "name": "End of season markdown",
+   "type": "STOCK_LEVEL",
+   "condition": {
+    "minStock": 30
+   },
+   "percentOff": 15,
+   "priority": 2
+  },
+  {
+   "name": "First order welcome",
+   "type": "SEGMENT",
+   "condition": {
+    "segment": "NEW"
+   },
+   "percentOff": 5,
+   "priority": 0
+  }
+ ],
+ "products": [
+  {
+   "slug": "oversized-wool-coat",
+   "name": "Oversized wool coat",
+   "categorySlug": "new-arrivals",
+   "description": "Double-faced wool in a relaxed drop-shoulder cut. Unlined, with a concealed placket and deep patch pockets.",
+   "attributes": {
+    "material": "wool"
+   },
+   "images": [
     {
-      "slug": "new-arrivals",
-      "name": "New Arrivals",
-      "filters": {
-        "variantAxes": [
-          "size"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
+     "url": "/products/garment.svg",
+     "alt": "Oversized wool coat"
     },
     {
-      "slug": "ready-to-wear",
-      "name": "Ready-to-Wear",
-      "filters": {
-        "variantAxes": [
-          "size"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
+     "url": "/products/garment-back.svg",
+     "alt": "Oversized wool coat — Back view"
     },
     {
-      "slug": "accessories",
-      "name": "Accessories",
-      "filters": {
-        "variantAxes": [
-          "size",
-          "color"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
-    },
-    {
-      "slug": "autumn",
-      "name": "Autumn Collection",
-      "filters": {
-        "variantAxes": [
-          "size",
-          "color"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
-    },
-    {
-      "slug": "winter",
-      "name": "Winter Collection",
-      "filters": {
-        "variantAxes": [
-          "size"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
-    },
-    {
-      "slug": "spring",
-      "name": "Spring Collection",
-      "filters": {
-        "variantAxes": [
-          "size",
-          "color"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
-    },
-    {
-      "slug": "christmas",
-      "name": "Christmas Collection",
-      "filters": {
-        "variantAxes": [
-          "size"
-        ],
-        "filters": [
-          "material"
-        ]
-      }
+     "url": "/products/garment-detail.svg",
+     "alt": "Oversized wool coat — Detail view"
     }
-  ],
-  "shippingMethods": [
+   ],
+   "variants": [
     {
-      "code": "STANDARD",
-      "name": "Standard delivery",
-      "fee": 30000,
-      "etaDaysMin": 3,
-      "etaDaysMax": 5,
-      "freeFrom": 1000000
+     "sku": "COAT-WOOL-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 4890000,
+     "stock": 6
     },
     {
-      "code": "EXPRESS",
-      "name": "Express delivery (city center only)",
-      "fee": 50000,
-      "etaDaysMin": 1,
-      "etaDaysMax": 2,
-      "freeFrom": null
+     "sku": "COAT-WOOL-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 4890000,
+     "stock": 9
     },
     {
-      "code": "PICKUP",
-      "name": "Boutique pickup",
-      "fee": 0,
-      "etaDaysMin": 0,
-      "etaDaysMax": 0,
-      "freeFrom": null
+     "sku": "COAT-WOOL-L",
+     "options": {
+      "size": "L"
+     },
+     "basePrice": 4890000,
+     "stock": 4
     }
-  ],
-  "priceRules": [
+   ]
+  },
+  {
+   "slug": "silk-slip-dress",
+   "name": "Silk slip dress",
+   "categorySlug": "new-arrivals",
+   "description": "Bias-cut silk charmeuse with adjustable straps and a softly draped cowl neckline.",
+   "attributes": {
+    "material": "silk"
+   },
+   "images": [
     {
-      "name": "Evening edit 8-10pm",
-      "type": "TIME_WINDOW",
-      "condition": {
-        "start": "20:00",
-        "end": "22:00"
-      },
-      "percentOff": 10,
-      "priority": 1
+     "url": "/products/garment.svg",
+     "alt": "Silk slip dress"
     },
     {
-      "name": "End of season markdown",
-      "type": "STOCK_LEVEL",
-      "condition": {
-        "minStock": 30
-      },
-      "percentOff": 15,
-      "priority": 2
+     "url": "/products/garment-back.svg",
+     "alt": "Silk slip dress — Back view"
     },
     {
-      "name": "First order welcome",
-      "type": "SEGMENT",
-      "condition": {
-        "segment": "NEW"
-      },
-      "percentOff": 5,
-      "priority": 0
+     "url": "/products/garment-detail.svg",
+     "alt": "Silk slip dress — Detail view"
     }
-  ],
-  "products": [
+   ],
+   "variants": [
     {
-      "slug": "oversized-wool-coat",
-      "name": "Oversized wool coat",
-      "categorySlug": "new-arrivals",
-      "description": "Double-faced wool in a relaxed drop-shoulder cut. Unlined, with a concealed placket and deep patch pockets.",
-      "attributes": {
-        "material": "wool"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Oversized wool coat"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "COAT-WOOL-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 4890000,
-          "stock": 6
-        },
-        {
-          "sku": "COAT-WOOL-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 4890000,
-          "stock": 9
-        },
-        {
-          "sku": "COAT-WOOL-L",
-          "options": {
-            "size": "L"
-          },
-          "basePrice": 4890000,
-          "stock": 4
-        }
-      ]
+     "sku": "DRESS-SILK-XS",
+     "options": {
+      "size": "XS"
+     },
+     "basePrice": 2450000,
+     "stock": 5
     },
     {
-      "slug": "silk-slip-dress",
-      "name": "Silk slip dress",
-      "categorySlug": "new-arrivals",
-      "description": "Bias-cut silk charmeuse with adjustable straps and a softly draped cowl neckline.",
-      "attributes": {
-        "material": "silk"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Silk slip dress"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "DRESS-SILK-XS",
-          "options": {
-            "size": "XS"
-          },
-          "basePrice": 2450000,
-          "stock": 5
-        },
-        {
-          "sku": "DRESS-SILK-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 2450000,
-          "stock": 11
-        },
-        {
-          "sku": "DRESS-SILK-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 2450000,
-          "stock": 8
-        }
-      ]
+     "sku": "DRESS-SILK-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 2450000,
+     "stock": 11
     },
     {
-      "slug": "cashmere-crewneck",
-      "name": "Cashmere crewneck",
-      "categorySlug": "ready-to-wear",
-      "description": "Mid-weight grade-A cashmere, knitted to a clean crewneck with ribbed trims.",
-      "attributes": {
-        "material": "cashmere"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Cashmere crewneck"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "KNIT-CASH-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 1890000,
-          "stock": 14
-        },
-        {
-          "sku": "KNIT-CASH-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 1890000,
-          "stock": 18
-        },
-        {
-          "sku": "KNIT-CASH-L",
-          "options": {
-            "size": "L"
-          },
-          "basePrice": 1890000,
-          "stock": 12
-        }
-      ]
-    },
-    {
-      "slug": "wide-leg-trousers",
-      "name": "Wide-leg tailored trousers",
-      "categorySlug": "ready-to-wear",
-      "description": "High-rise wool blend with a pressed crease and a fluid wide leg that falls straight from the hip.",
-      "attributes": {
-        "material": "wool blend"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Wide-leg tailored trousers"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "TROU-WIDE-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 1650000,
-          "stock": 10
-        },
-        {
-          "sku": "TROU-WIDE-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 1650000,
-          "stock": 7
-        }
-      ]
-    },
-    {
-      "slug": "structured-leather-tote",
-      "name": "Structured leather tote",
-      "categorySlug": "accessories",
-      "description": "Vegetable-tanned calfskin with a rigid base, twin rolled handles and a suede-lined interior.",
-      "attributes": {
-        "material": "leather"
-      },
-      "images": [
-        {
-          "url": "/products/bag.svg",
-          "alt": "Structured leather tote"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "BAG-TOTE-BLK",
-          "options": {
-            "color": "Black"
-          },
-          "basePrice": 3290000,
-          "stock": 0
-        }
-      ]
-    },
-    {
-      "slug": "gold-hoop-earrings",
-      "name": "Gold hoop earrings",
-      "categorySlug": "accessories",
-      "description": "Slim 18k gold-plated brass hoops with a hinged closure. Sold as a pair.",
-      "attributes": {
-        "material": "gold-plated brass"
-      },
-      "images": [
-        {
-          "url": "/products/jewellery.svg",
-          "alt": "Gold hoop earrings"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "EAR-HOOP-SM",
-          "options": {
-            "size": "Small"
-          },
-          "basePrice": 790000,
-          "stock": 40
-        },
-        {
-          "sku": "EAR-HOOP-LG",
-          "options": {
-            "size": "Large"
-          },
-          "basePrice": 890000,
-          "stock": 35
-        }
-      ]
-    },
-    {
-      "slug": "plaid-wool-overshirt",
-      "name": "Plaid wool overshirt",
-      "categorySlug": "autumn",
-      "description": "Brushed wool overshirt in a muted plaid, cut for layering. Patch pockets, horn buttons.",
-      "attributes": {
-        "material": "wool"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Plaid wool overshirt"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "SHIRT-PLAID-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 2890000,
-          "stock": 8
-        },
-        {
-          "sku": "SHIRT-PLAID-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 2890000,
-          "stock": 10
-        },
-        {
-          "sku": "SHIRT-PLAID-L",
-          "options": {
-            "size": "L"
-          },
-          "basePrice": 2890000,
-          "stock": 5
-        }
-      ]
-    },
-    {
-      "slug": "leather-crossbody-bag",
-      "name": "Leather crossbody bag",
-      "categorySlug": "autumn",
-      "description": "Vegetable-tanned leather crossbody with an adjustable strap and magnetic clasp.",
-      "attributes": {
-        "material": "leather"
-      },
-      "images": [
-        {
-          "url": "/products/bag.svg",
-          "alt": "Leather crossbody bag"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "BAG-CROSS-TAN",
-          "options": {
-            "color": "Tan"
-          },
-          "basePrice": 2190000,
-          "stock": 12
-        }
-      ]
-    },
-    {
-      "slug": "quilted-puffer-coat",
-      "name": "Quilted puffer coat",
-      "categorySlug": "winter",
-      "description": "Channel-quilted puffer with a down-alternative fill, finished with a storm flap.",
-      "attributes": {
-        "material": "down-fill"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Quilted puffer coat"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "COAT-PUFFER-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 3790000,
-          "stock": 7
-        },
-        {
-          "sku": "COAT-PUFFER-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 3790000,
-          "stock": 9
-        },
-        {
-          "sku": "COAT-PUFFER-L",
-          "options": {
-            "size": "L"
-          },
-          "basePrice": 3790000,
-          "stock": 4
-        }
-      ]
-    },
-    {
-      "slug": "pearl-drop-earrings",
-      "name": "Pearl drop earrings",
-      "categorySlug": "winter",
-      "description": "Freshwater pearl drops on a fine gold-plated hook.",
-      "attributes": {
-        "material": "freshwater pearl"
-      },
-      "images": [
-        {
-          "url": "/products/jewellery.svg",
-          "alt": "Pearl drop earrings"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "EAR-PEARL-SM",
-          "options": {
-            "size": "Small"
-          },
-          "basePrice": 690000,
-          "stock": 30
-        },
-        {
-          "sku": "EAR-PEARL-LG",
-          "options": {
-            "size": "Large"
-          },
-          "basePrice": 790000,
-          "stock": 22
-        }
-      ]
-    },
-    {
-      "slug": "floral-midi-dress",
-      "name": "Floral midi dress",
-      "categorySlug": "spring",
-      "description": "Lightweight cotton midi in a small-scale floral print, with a tie waist.",
-      "attributes": {
-        "material": "cotton"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Floral midi dress"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "DRESS-FLORAL-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 2190000,
-          "stock": 9
-        },
-        {
-          "sku": "DRESS-FLORAL-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 2190000,
-          "stock": 11
-        },
-        {
-          "sku": "DRESS-FLORAL-L",
-          "options": {
-            "size": "L"
-          },
-          "basePrice": 2190000,
-          "stock": 6
-        }
-      ]
-    },
-    {
-      "slug": "woven-straw-tote",
-      "name": "Woven straw tote",
-      "categorySlug": "spring",
-      "description": "Hand-woven straw tote with leather handles, lined in natural cotton.",
-      "attributes": {
-        "material": "straw"
-      },
-      "images": [
-        {
-          "url": "/products/bag.svg",
-          "alt": "Woven straw tote"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "BAG-STRAW-NAT",
-          "options": {
-            "color": "Natural"
-          },
-          "basePrice": 1490000,
-          "stock": 15
-        }
-      ]
-    },
-    {
-      "slug": "red-velvet-blazer",
-      "name": "Red velvet blazer",
-      "categorySlug": "christmas",
-      "description": "Single-breasted blazer in deep red velvet, cut for evening wear.",
-      "attributes": {
-        "material": "velvet"
-      },
-      "images": [
-        {
-          "url": "/products/garment.svg",
-          "alt": "Red velvet blazer"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "BLAZER-VELVET-S",
-          "options": {
-            "size": "S"
-          },
-          "basePrice": 3290000,
-          "stock": 6
-        },
-        {
-          "sku": "BLAZER-VELVET-M",
-          "options": {
-            "size": "M"
-          },
-          "basePrice": 3290000,
-          "stock": 8
-        },
-        {
-          "sku": "BLAZER-VELVET-L",
-          "options": {
-            "size": "L"
-          },
-          "basePrice": 3290000,
-          "stock": 3
-        }
-      ]
-    },
-    {
-      "slug": "gold-charm-bracelet",
-      "name": "Gold charm bracelet",
-      "categorySlug": "christmas",
-      "description": "Gold-plated chain bracelet with a single star charm.",
-      "attributes": {
-        "material": "gold-plated"
-      },
-      "images": [
-        {
-          "url": "/products/jewellery.svg",
-          "alt": "Gold charm bracelet"
-        }
-      ],
-      "variants": [
-        {
-          "sku": "BRACELET-STAR-SM",
-          "options": {
-            "size": "Small"
-          },
-          "basePrice": 590000,
-          "stock": 25
-        },
-        {
-          "sku": "BRACELET-STAR-LG",
-          "options": {
-            "size": "Large"
-          },
-          "basePrice": 650000,
-          "stock": 20
-        }
-      ]
+     "sku": "DRESS-SILK-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 2450000,
+     "stock": 8
     }
-  ],
-  "demoAccounts": [
+   ]
+  },
+  {
+   "slug": "cashmere-crewneck",
+   "name": "Cashmere crewneck",
+   "categorySlug": "ready-to-wear",
+   "description": "Mid-weight grade-A cashmere, knitted to a clean crewneck with ribbed trims.",
+   "attributes": {
+    "material": "cashmere"
+   },
+   "images": [
     {
-      "email": "admin@atelier.test",
-      "name": "Admin Demo",
-      "password": "Password123!",
-      "role": "ADMIN"
+     "url": "/products/garment.svg",
+     "alt": "Cashmere crewneck"
     },
     {
-      "email": "staff@atelier.test",
-      "name": "Staff Demo",
-      "password": "Password123!",
-      "role": "STAFF"
+     "url": "/products/garment-back.svg",
+     "alt": "Cashmere crewneck — Back view"
     },
     {
-      "email": "customer1@atelier.test",
-      "name": "Customer A",
-      "password": "Password123!",
-      "role": "CUSTOMER"
-    },
-    {
-      "email": "customer2@atelier.test",
-      "name": "Customer B",
-      "password": "Password123!",
-      "role": "CUSTOMER"
+     "url": "/products/garment-detail.svg",
+     "alt": "Cashmere crewneck — Detail view"
     }
-  ]
+   ],
+   "variants": [
+    {
+     "sku": "KNIT-CASH-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 1890000,
+     "stock": 14
+    },
+    {
+     "sku": "KNIT-CASH-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 1890000,
+     "stock": 18
+    },
+    {
+     "sku": "KNIT-CASH-L",
+     "options": {
+      "size": "L"
+     },
+     "basePrice": 1890000,
+     "stock": 12
+    }
+   ]
+  },
+  {
+   "slug": "wide-leg-trousers",
+   "name": "Wide-leg tailored trousers",
+   "categorySlug": "ready-to-wear",
+   "description": "High-rise wool blend with a pressed crease and a fluid wide leg that falls straight from the hip.",
+   "attributes": {
+    "material": "wool blend"
+   },
+   "images": [
+    {
+     "url": "/products/garment.svg",
+     "alt": "Wide-leg tailored trousers"
+    },
+    {
+     "url": "/products/garment-back.svg",
+     "alt": "Wide-leg tailored trousers — Back view"
+    },
+    {
+     "url": "/products/garment-detail.svg",
+     "alt": "Wide-leg tailored trousers — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "TROU-WIDE-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 1650000,
+     "stock": 10
+    },
+    {
+     "sku": "TROU-WIDE-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 1650000,
+     "stock": 7
+    }
+   ]
+  },
+  {
+   "slug": "structured-leather-tote",
+   "name": "Structured leather tote",
+   "categorySlug": "accessories",
+   "description": "Vegetable-tanned calfskin with a rigid base, twin rolled handles and a suede-lined interior.",
+   "attributes": {
+    "material": "leather"
+   },
+   "images": [
+    {
+     "url": "/products/bag.svg",
+     "alt": "Structured leather tote"
+    },
+    {
+     "url": "/products/bag-back.svg",
+     "alt": "Structured leather tote — Back view"
+    },
+    {
+     "url": "/products/bag-detail.svg",
+     "alt": "Structured leather tote — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "BAG-TOTE-BLK",
+     "options": {
+      "color": "Black"
+     },
+     "basePrice": 3290000,
+     "stock": 0
+    }
+   ]
+  },
+  {
+   "slug": "gold-hoop-earrings",
+   "name": "Gold hoop earrings",
+   "categorySlug": "accessories",
+   "description": "Slim 18k gold-plated brass hoops with a hinged closure. Sold as a pair.",
+   "attributes": {
+    "material": "gold-plated brass"
+   },
+   "images": [
+    {
+     "url": "/products/jewellery.svg",
+     "alt": "Gold hoop earrings"
+    },
+    {
+     "url": "/products/jewellery-detail.svg",
+     "alt": "Gold hoop earrings — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "EAR-HOOP-SM",
+     "options": {
+      "size": "Small"
+     },
+     "basePrice": 790000,
+     "stock": 40
+    },
+    {
+     "sku": "EAR-HOOP-LG",
+     "options": {
+      "size": "Large"
+     },
+     "basePrice": 890000,
+     "stock": 35
+    }
+   ]
+  },
+  {
+   "slug": "plaid-wool-overshirt",
+   "name": "Plaid wool overshirt",
+   "categorySlug": "autumn",
+   "description": "Brushed wool overshirt in a muted plaid, cut for layering. Patch pockets, horn buttons.",
+   "attributes": {
+    "material": "wool"
+   },
+   "images": [
+    {
+     "url": "/products/garment.svg",
+     "alt": "Plaid wool overshirt"
+    },
+    {
+     "url": "/products/garment-back.svg",
+     "alt": "Plaid wool overshirt — Back view"
+    },
+    {
+     "url": "/products/garment-detail.svg",
+     "alt": "Plaid wool overshirt — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "SHIRT-PLAID-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 2890000,
+     "stock": 8
+    },
+    {
+     "sku": "SHIRT-PLAID-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 2890000,
+     "stock": 10
+    },
+    {
+     "sku": "SHIRT-PLAID-L",
+     "options": {
+      "size": "L"
+     },
+     "basePrice": 2890000,
+     "stock": 5
+    }
+   ]
+  },
+  {
+   "slug": "leather-crossbody-bag",
+   "name": "Leather crossbody bag",
+   "categorySlug": "autumn",
+   "description": "Vegetable-tanned leather crossbody with an adjustable strap and magnetic clasp.",
+   "attributes": {
+    "material": "leather"
+   },
+   "images": [
+    {
+     "url": "/products/bag.svg",
+     "alt": "Leather crossbody bag"
+    },
+    {
+     "url": "/products/bag-back.svg",
+     "alt": "Leather crossbody bag — Back view"
+    },
+    {
+     "url": "/products/bag-detail.svg",
+     "alt": "Leather crossbody bag — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "BAG-CROSS-TAN",
+     "options": {
+      "color": "Tan"
+     },
+     "basePrice": 2190000,
+     "stock": 12
+    }
+   ]
+  },
+  {
+   "slug": "quilted-puffer-coat",
+   "name": "Quilted puffer coat",
+   "categorySlug": "winter",
+   "description": "Channel-quilted puffer with a down-alternative fill, finished with a storm flap.",
+   "attributes": {
+    "material": "down-fill"
+   },
+   "images": [
+    {
+     "url": "/products/garment.svg",
+     "alt": "Quilted puffer coat"
+    },
+    {
+     "url": "/products/garment-back.svg",
+     "alt": "Quilted puffer coat — Back view"
+    },
+    {
+     "url": "/products/garment-detail.svg",
+     "alt": "Quilted puffer coat — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "COAT-PUFFER-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 3790000,
+     "stock": 7
+    },
+    {
+     "sku": "COAT-PUFFER-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 3790000,
+     "stock": 9
+    },
+    {
+     "sku": "COAT-PUFFER-L",
+     "options": {
+      "size": "L"
+     },
+     "basePrice": 3790000,
+     "stock": 4
+    }
+   ]
+  },
+  {
+   "slug": "pearl-drop-earrings",
+   "name": "Pearl drop earrings",
+   "categorySlug": "winter",
+   "description": "Freshwater pearl drops on a fine gold-plated hook.",
+   "attributes": {
+    "material": "freshwater pearl"
+   },
+   "images": [
+    {
+     "url": "/products/jewellery.svg",
+     "alt": "Pearl drop earrings"
+    },
+    {
+     "url": "/products/jewellery-detail.svg",
+     "alt": "Pearl drop earrings — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "EAR-PEARL-SM",
+     "options": {
+      "size": "Small"
+     },
+     "basePrice": 690000,
+     "stock": 30
+    },
+    {
+     "sku": "EAR-PEARL-LG",
+     "options": {
+      "size": "Large"
+     },
+     "basePrice": 790000,
+     "stock": 22
+    }
+   ]
+  },
+  {
+   "slug": "floral-midi-dress",
+   "name": "Floral midi dress",
+   "categorySlug": "spring",
+   "description": "Lightweight cotton midi in a small-scale floral print, with a tie waist.",
+   "attributes": {
+    "material": "cotton"
+   },
+   "images": [
+    {
+     "url": "/products/garment.svg",
+     "alt": "Floral midi dress"
+    },
+    {
+     "url": "/products/garment-back.svg",
+     "alt": "Floral midi dress — Back view"
+    },
+    {
+     "url": "/products/garment-detail.svg",
+     "alt": "Floral midi dress — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "DRESS-FLORAL-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 2190000,
+     "stock": 9
+    },
+    {
+     "sku": "DRESS-FLORAL-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 2190000,
+     "stock": 11
+    },
+    {
+     "sku": "DRESS-FLORAL-L",
+     "options": {
+      "size": "L"
+     },
+     "basePrice": 2190000,
+     "stock": 6
+    }
+   ]
+  },
+  {
+   "slug": "woven-straw-tote",
+   "name": "Woven straw tote",
+   "categorySlug": "spring",
+   "description": "Hand-woven straw tote with leather handles, lined in natural cotton.",
+   "attributes": {
+    "material": "straw"
+   },
+   "images": [
+    {
+     "url": "/products/bag.svg",
+     "alt": "Woven straw tote"
+    },
+    {
+     "url": "/products/bag-back.svg",
+     "alt": "Woven straw tote — Back view"
+    },
+    {
+     "url": "/products/bag-detail.svg",
+     "alt": "Woven straw tote — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "BAG-STRAW-NAT",
+     "options": {
+      "color": "Natural"
+     },
+     "basePrice": 1490000,
+     "stock": 15
+    }
+   ]
+  },
+  {
+   "slug": "red-velvet-blazer",
+   "name": "Red velvet blazer",
+   "categorySlug": "christmas",
+   "description": "Single-breasted blazer in deep red velvet, cut for evening wear.",
+   "attributes": {
+    "material": "velvet"
+   },
+   "images": [
+    {
+     "url": "/products/garment.svg",
+     "alt": "Red velvet blazer"
+    },
+    {
+     "url": "/products/garment-back.svg",
+     "alt": "Red velvet blazer — Back view"
+    },
+    {
+     "url": "/products/garment-detail.svg",
+     "alt": "Red velvet blazer — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "BLAZER-VELVET-S",
+     "options": {
+      "size": "S"
+     },
+     "basePrice": 3290000,
+     "stock": 6
+    },
+    {
+     "sku": "BLAZER-VELVET-M",
+     "options": {
+      "size": "M"
+     },
+     "basePrice": 3290000,
+     "stock": 8
+    },
+    {
+     "sku": "BLAZER-VELVET-L",
+     "options": {
+      "size": "L"
+     },
+     "basePrice": 3290000,
+     "stock": 3
+    }
+   ]
+  },
+  {
+   "slug": "gold-charm-bracelet",
+   "name": "Gold charm bracelet",
+   "categorySlug": "christmas",
+   "description": "Gold-plated chain bracelet with a single star charm.",
+   "attributes": {
+    "material": "gold-plated"
+   },
+   "images": [
+    {
+     "url": "/products/jewellery.svg",
+     "alt": "Gold charm bracelet"
+    },
+    {
+     "url": "/products/jewellery-detail.svg",
+     "alt": "Gold charm bracelet — Detail view"
+    }
+   ],
+   "variants": [
+    {
+     "sku": "BRACELET-STAR-SM",
+     "options": {
+      "size": "Small"
+     },
+     "basePrice": 590000,
+     "stock": 25
+    },
+    {
+     "sku": "BRACELET-STAR-LG",
+     "options": {
+      "size": "Large"
+     },
+     "basePrice": 650000,
+     "stock": 20
+    }
+   ]
+  }
+ ],
+ "demoAccounts": [
+  {
+   "email": "admin@atelier.test",
+   "name": "Admin Demo",
+   "password": "Password123!",
+   "role": "ADMIN"
+  },
+  {
+   "email": "staff@atelier.test",
+   "name": "Staff Demo",
+   "password": "Password123!",
+   "role": "STAFF"
+  },
+  {
+   "email": "customer1@atelier.test",
+   "name": "Customer A",
+   "password": "Password123!",
+   "role": "CUSTOMER"
+  },
+  {
+   "email": "customer2@atelier.test",
+   "name": "Customer B",
+   "password": "Password123!",
+   "role": "CUSTOMER"
+  }
+ ]
 }

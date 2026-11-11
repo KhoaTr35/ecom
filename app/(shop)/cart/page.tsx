@@ -18,6 +18,9 @@ import { Button } from "@/components/ui/button";
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { MobileScreenHeader } from "@/components/shop/mobile/mobile-screen-header";
+import { MobileBagList } from "@/components/shop/mobile/mobile-bag-list";
+import { MobileStickyActionBar } from "@/components/shop/mobile/mobile-sticky-action-bar";
 import type { PriceQuote } from "@/lib/pricing";
 import { formatVnd } from "@/lib/utils";
 
@@ -87,9 +90,14 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-20">
-      <h1 className="font-heading text-5xl leading-tight">Shopping bag</h1>
+      <div className="lg:hidden">
+        <MobileScreenHeader backHref="/" title={`Bag · ${items.length} items`} />
+      </div>
+      <h1 className="hidden font-heading text-5xl leading-tight lg:block">Shopping bag</h1>
 
-      <div className="mt-12 divide-y divide-border border-y border-border">
+      {quote && <MobileBagList lines={quote.lines} onUpdateQty={updateQty} onRemove={removeItem} />}
+
+      <div className="mt-12 hidden divide-y divide-border border-y border-border lg:block">
         {/* First load has no priced lines yet — skeleton rows stand in for them.
             A later revalidation (qty change) keeps showing the stale quote instead
             of flashing back to skeletons. */}
@@ -141,7 +149,7 @@ export default function CartPage() {
       </div>
 
       {quote ? (
-        <div className="mt-8 space-y-3 text-sm">
+        <div className="mt-8 hidden space-y-3 text-sm lg:block">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Subtotal</span>
             <span>{formatVnd(quote.subtotal)}</span>
@@ -156,7 +164,7 @@ export default function CartPage() {
           </div>
         </div>
       ) : (
-        <div className="mt-8 space-y-3">
+        <div className="mt-8 hidden space-y-3 lg:block">
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-4 w-full" />
           <Skeleton className="h-5 w-full" />
@@ -165,9 +173,18 @@ export default function CartPage() {
 
       <Button
         size="lg"
-        className="label-eyebrow mt-10 h-12 w-full"
+        className="label-eyebrow mt-10 hidden h-12 w-full lg:block"
         render={<Link href="/checkout">Proceed to checkout</Link>}
       />
+      <div className="h-28 lg:hidden" aria-hidden />
+
+      <MobileStickyActionBar>
+        <div className="flex flex-col gap-0.5">
+          <span className="text-xs text-muted-foreground">Subtotal</span>
+          <span className="text-[15px] font-semibold">{formatVnd(quote?.subtotal ?? 0)}</span>
+        </div>
+        <Button className="h-[50px] flex-1" render={<Link href="/checkout">Proceed to checkout</Link>} />
+      </MobileStickyActionBar>
     </div>
   );
 }

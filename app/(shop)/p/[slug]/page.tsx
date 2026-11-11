@@ -9,6 +9,7 @@ import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ProductCard } from "@/components/shop/product-card";
 import { ProductPurchasePanel } from "@/components/shop/product-purchase-panel";
+import { MobileProductDetail } from "@/components/shop/mobile/mobile-product-detail";
 import { formatVnd } from "@/lib/utils";
 
 /**
@@ -48,7 +49,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
   return (
     <div>
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-10 sm:px-8 lg:grid-cols-2 lg:gap-20 lg:py-16">
+      <MobileProductDetail
+        product={product}
+        variants={variants}
+        axisLabel={variantAxisLabel(product.variants)}
+        together={together}
+        related={related}
+      />
+
+      <div className="mx-auto hidden max-w-7xl gap-10 px-5 py-10 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-20 lg:py-16">
         <div className="relative aspect-[3/4] overflow-hidden bg-muted">
           {product.images[0] ? (
             <Image
@@ -112,7 +121,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {together.length > 0 && (
-        <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-8">
+        <section className="mx-auto hidden max-w-7xl px-5 pb-16 sm:px-8 lg:block">
           <h2 className="label-eyebrow mb-10 border-b border-border pb-5 text-foreground">
             Frequently bought together
           </h2>
@@ -125,7 +134,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       )}
 
       {related.length > 0 && (
-        <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">
+        <section className="mx-auto hidden max-w-7xl px-5 pb-24 sm:px-8 lg:block">
           <h2 className="label-eyebrow mb-10 border-b border-border pb-5 text-foreground">
             You may also like
           </h2>

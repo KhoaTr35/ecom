@@ -17,8 +17,10 @@ export async function listCategories() {
 }
 
 /** Every ACTIVE product matching category/search, unpaginated — the shared
- * base for both the product grid and the filter sidebar's facet counts. */
-async function getCandidateProducts(params: { categorySlug?: string; q?: string }) {
+ * base for both the product grid and the filter sidebar's facet counts.
+ * `imagesLimit` defaults to 1 (grid card only shows one); the mobile feed's
+ * story bars pass a higher limit to get the full gallery. */
+async function getCandidateProducts(params: { categorySlug?: string; q?: string; imagesLimit?: number }) {
   try {
     const where = {
       status: "ACTIVE",
@@ -28,7 +30,11 @@ async function getCandidateProducts(params: { categorySlug?: string; q?: string 
 
     return await prisma.product.findMany({
       where,
-      include: { images: { orderBy: { sortOrder: "asc" }, take: 1 }, variants: true },
+      include: {
+        images: { orderBy: { sortOrder: "asc" }, take: params.imagesLimit ?? 1 },
+        variants: true,
+        category: true,
+      },
       orderBy: { createdAt: "desc" },
     });
   } catch {
@@ -48,6 +54,7 @@ export async function listProducts(
     pageSize?: number;
     sort?: ProductSort;
     filters?: Record<string, string[]>;
+    imagesLimit?: number;
   } = {},
 ) {
   const page = params.page ?? 1;

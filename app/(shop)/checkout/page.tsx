@@ -12,6 +12,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import type { Address } from "@/components/shop/address-manager";
 import { CheckoutAddressSection, EMPTY_MANUAL_ADDRESS, type ManualAddress } from "@/components/shop/checkout-address-section";
+import { MobileScreenHeader } from "@/components/shop/mobile/mobile-screen-header";
+import { MobileCheckoutSteps } from "@/components/shop/mobile/mobile-checkout-steps";
+import { MobileStickyActionBar } from "@/components/shop/mobile/mobile-sticky-action-bar";
+import type { PriceQuote } from "@/lib/pricing";
 import { formatVnd } from "@/lib/utils";
 import { cn } from "cn";
 
@@ -32,6 +36,21 @@ export default function CheckoutPage() {
   const [selectedAddressId, setSelectedAddressId] = useState("new");
   const [manualAddress, setManualAddress] = useState<ManualAddress>(EMPTY_MANUAL_ADDRESS);
   const [submitting, setSubmitting] = useState(false);
+  // Mirrors CartPage's own quote-fetch (same guard, same "keep the stale
+  // quote" behavior) — only used for the mobile collapsed summary.
+  const [quote, setQuote] = useState<PriceQuote | null>(null);
+
+  useEffect(() => {
+    if (items.length === 0) return;
+    fetch("/api/cart/quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items }),
+    })
+      .then((res) => res.json())
+      .then((json) => setQuote(json.data))
+      .catch(() => {});
+  }, [items]);
 
   const addressComplete =
     selectedAddressId !== "new" || Object.values(manualAddress).every((value) => value.trim().length > 0);
@@ -120,7 +139,11 @@ export default function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-20">
-      <h1 className="font-heading text-5xl leading-tight">Checkout</h1>
+      <div className="lg:hidden">
+        <MobileScreenHeader backHref="/cart" title="Checkout" />
+        <MobileCheckoutSteps itemCount={quote?.lines.length ?? items.length} total={quote?.subtotal ?? 0} />
+      </div>
+      <h1 className="hidden font-heading text-5xl leading-tight lg:block">Checkout</h1>
 
       {isPending || !session ? (
         <CheckoutBodySkeleton />
@@ -203,13 +226,30 @@ export default function CheckoutPage() {
 
           <Button
             size="lg"
-            className="label-eyebrow mt-10 h-12 w-full"
+            className="label-eyebrow mt-10 hidden h-12 w-full lg:block"
             disabled={submitting || !shippingMethodCode || !addressComplete}
             onClick={placeOrder}
           >
             {submitting && <Spinner data-icon="inline-start" />}
             {submitting ? "Processing" : "Place order"}
           </Button>
+          <div className="h-28 lg:hidden" aria-hidden />
+
+          <MobileStickyActionBar>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-xs text-muted-foreground">Total</span>
+              <span className="text-[15px] font-semibold">{formatVnd(quote?.subtotal ?? 0)}</span>
+            </div>
+            <button
+              type="button"
+              disabled={submitting || !shippingMethodCode || !addressComplete}
+              onClick={placeOrder}
+              className="flex h-[50px] flex-1 items-center justify-center gap-2 rounded-md bg-foreground text-[12px] font-semibold uppercase tracking-[0.1em] text-background disabled:opacity-60"
+            >
+              {submitting && <Spinner data-icon="inline-start" />}
+              {submitting ? "Processing" : "Place order"}
+            </button>
+          </MobileStickyActionBar>
         </>
       )}
     </div>

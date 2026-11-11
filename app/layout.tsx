@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Inter, Geist_Mono } from "next/font/google";
 import { GuestCartProvider } from "@/components/shop/guest-cart-context";
 import { DevModeFrame } from "@/components/dev/dev-mode-frame";
@@ -27,6 +27,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ATELIER",
   description: "Fashion e-commerce website — CO3027 course project",
+};
+
+// viewportFit: "cover" + env(safe-area-inset-*) on the mobile tab bar is what
+// keeps the bottom nav clear of a notch/home-indicator on real phones.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
