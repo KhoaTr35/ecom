@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 import { useGuestCart } from "@/components/shop/guest-cart-context";
-import { MobileNav } from "@/components/shop/mobile-nav";
 import { SHOP_LINKS } from "@/components/shop/nav-links";
 import type { AuthUser } from "@/lib/auth";
 import { signOut, useSession } from "@/lib/auth/client";
@@ -37,18 +36,11 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-sm">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
-        <div className="flex items-center gap-1 lg:hidden">
-          <MobileNav />
-        </div>
-
-        <Link
-          href="/"
-          className="text-base font-medium uppercase tracking-[0.3em] text-foreground max-lg:absolute max-lg:left-1/2 max-lg:-translate-x-1/2"
-        >
+        <Link href="/" className="text-base font-medium uppercase tracking-[0.3em] text-foreground">
           Atelier
         </Link>
 
-        <nav className="label-eyebrow hidden items-center gap-9 text-muted-foreground lg:flex">
+        <nav className="label-eyebrow flex items-center gap-9 text-muted-foreground">
           {SHOP_LINKS.map((item) => (
             <Link key={item.href} href={item.href} className="transition-colors hover:text-foreground">
               {item.label}
@@ -56,7 +48,7 @@ export function Header() {
           ))}
         </nav>
 
-        <form onSubmit={onSearchSubmit} className="hidden lg:block">
+        <form onSubmit={onSearchSubmit}>
           <InputGroup className="h-9 w-40 transition-[width] focus-within:w-56">
             <InputGroupInput
               type="search"

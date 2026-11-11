@@ -33,7 +33,7 @@ export function CookieConsentBanner() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 flex flex-col items-center justify-between gap-4 border-t border-border bg-background p-5 sm:flex-row">
+    <div className="fixed inset-x-0 bottom-20 z-50 flex flex-col items-center justify-between gap-4 border-t border-border bg-background p-5 sm:flex-row lg:bottom-0">
       <p className="text-sm text-muted-foreground">
         We use cookies to understand how visitors use this site.
       </p>
