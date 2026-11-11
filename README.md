@@ -49,15 +49,30 @@ Trang chủ (`/`) có 2 lối vào xem danh mục, cả hai đọc thật từ D
   mục chia 2 nhóm thật — **By season** (4 collection theo mùa) và
   **By type** (3 danh mục gốc) — kèm badge số lượng sản phẩm thật.
 
-Header/footer/menu mobile (`components/shop/nav-links.ts`) hiện vẫn chỉ
-hardcode 3 link đầu (New Arrivals/Ready-to-Wear/Accessories) — 4 collection
-theo mùa chỉ vào được qua trang chủ hoặc URL trực tiếp, chưa đưa vào nav
-chính; đổi `nav-links.ts` sang đọc động từ `listCategories()` là việc có
-thể làm tiếp nếu muốn đồng bộ.
+Desktop `Header`/`Footer` (`components/shop/nav-links.ts`) vẫn chỉ hardcode
+3 link đầu (New Arrivals/Ready-to-Wear/Accessories) — 4 collection theo mùa
+chỉ vào được qua trang chủ hoặc URL trực tiếp ở breakpoint này; đổi
+`nav-links.ts` sang đọc động từ `listCategories()` là việc có thể làm tiếp
+nếu muốn đồng bộ.
 
-Ảnh sản phẩm dùng lại 3 placeholder SVG có sẵn trong `public/products/`
-(`garment.svg`, `bag.svg`, `jewellery.svg`) theo loại sản phẩm, không fake
-ảnh thật.
+**Mobile (`< lg`)** không còn dùng hamburger menu: giao diện là "reel
+commerce" — Feed (`/`) full-screen từng sản phẩm một, swipe lên/xuống, mỗi
+vài sản phẩm chèn một collection reel đọc thật từ `Category.tagline` /
+`Category.heroMediaUrl`; swipe phải hoặc tab "Wall" sang `/wall`, trang kiểu
+profile Instagram liệt kê **đủ cả 7 danh mục** (đã đóng gap 3-link nói
+trên, riêng cho mobile) cùng toàn bộ sản phẩm dạng lưới 3 cột. Thanh tab
+dưới cùng cố định (Feed · Wall · Search · Bag · Me,
+`components/shop/mobile/mobile-tab-bar.tsx`) thay cho menu/icon header.
+Desktop ở mọi route không đổi — mobile là cây JSX riêng (`lg:hidden` /
+`hidden lg:block`) trong cùng route, không phải domain hay middleware
+riêng, nên toggle desktop/mobile có sẵn (`components/dev/dev-mode-frame.tsx`)
+vẫn dùng được.
+
+Ảnh sản phẩm dùng placeholder SVG trong `public/products/` theo loại sản
+phẩm (`garment`/`bag`/`jewellery`, mỗi loại có thêm bản `-back`/`-detail`
+cho story bar nhiều khung ảnh ở Feed/product detail), không fake ảnh thật.
+`public/collections/` có 1 SVG 9:16 mỗi danh mục cho `Category.heroMediaUrl`
+(collection reel trên Feed).
 
 ## Dữ liệu lịch sử sau khi seed
 
