@@ -44,6 +44,9 @@ export default async function CheckoutResultPage({
         className="label-eyebrow mt-10 h-12 px-10"
         render={<Link href="/account/orders">View my orders</Link>}
       />
+      <Link href="/" className="mt-4 block text-sm text-muted-foreground">
+        Keep browsing
+      </Link>
     </div>
   );
 }

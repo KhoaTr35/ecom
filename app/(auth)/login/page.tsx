@@ -38,12 +38,19 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex min-h-[85vh] items-center justify-center px-5 py-16">
+    <div className="flex min-h-[85vh] flex-col px-5 py-16">
+      <Link href="/cart" className="self-start text-sm text-muted-foreground lg:hidden">
+        Cancel
+      </Link>
+      <div className="flex flex-1 items-center justify-center">
       <div className="w-full max-w-sm">
         <Link href="/" className="block text-center text-sm font-medium uppercase tracking-[0.3em]">
           Atelier
         </Link>
         <h1 className="mt-8 text-center font-heading text-4xl leading-tight">Sign in</h1>
+        <p className="mt-2 text-center text-sm text-muted-foreground lg:hidden">
+          Your bag is saved. You&apos;ll be back right after.
+        </p>
 
         <form onSubmit={onSubmit} className="mt-10">
           <FieldGroup>
@@ -88,6 +95,7 @@ function LoginForm() {
             Create one
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );

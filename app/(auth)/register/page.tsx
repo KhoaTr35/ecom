@@ -30,12 +30,19 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-[85vh] items-center justify-center px-5 py-16">
+    <div className="flex min-h-[85vh] flex-col px-5 py-16">
+      <Link href="/login" className="self-start text-sm text-muted-foreground lg:hidden">
+        Cancel
+      </Link>
+      <div className="flex flex-1 items-center justify-center">
       <div className="w-full max-w-sm">
         <Link href="/" className="block text-center text-sm font-medium uppercase tracking-[0.3em]">
           Atelier
         </Link>
         <h1 className="mt-8 text-center font-heading text-4xl leading-tight">Create account</h1>
+        <p className="mt-2 text-center text-sm text-muted-foreground lg:hidden">
+          Track orders, save addresses and check out faster.
+        </p>
 
         <form onSubmit={onSubmit} className="mt-10">
           <FieldGroup>
@@ -94,6 +101,7 @@ export default function RegisterPage() {
             Sign in
           </Link>
         </p>
+      </div>
       </div>
     </div>
   );
