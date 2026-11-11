@@ -1,11 +1,12 @@
 import { headers } from "next/headers";
-import { listProducts } from "@/lib/catalog";
+import { listCategories, listProducts } from "@/lib/catalog";
 import { toProductCards } from "@/lib/catalog/product-pricing";
 import { SORT_VALUES, type ProductSort } from "@/lib/catalog/facets";
 import { getCurrentUser } from "@/lib/auth/get-current-user";
 import { ProductCard } from "@/components/shop/product-card";
 import { CategoryToolbar } from "@/components/shop/category-toolbar";
 import { CategoryPagination } from "@/components/shop/category-pagination";
+import { MobileSearchScreen } from "@/components/shop/mobile/mobile-search-screen";
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 
 type SearchParams = Record<string, string | string[] | undefined>;
@@ -22,9 +23,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   const sort: ProductSort = SORT_VALUES.includes(sortParam as ProductSort) ? (sortParam as ProductSort) : "newest";
   const page = Math.max(1, Number(firstValue(sp.page)) || 1);
 
-  const [{ items: rawItems, total, pageSize }, user] = await Promise.all([
+  const [{ items: rawItems, total, pageSize }, user, categories] = await Promise.all([
     q ? listProducts({ q, sort, page }) : Promise.resolve({ items: [], total: 0, page, pageSize: 24 }),
     getCurrentUser(await headers()),
+    listCategories(),
   ]);
   const items = await toProductCards(rawItems, { userId: user?.id ?? null, now: new Date() });
 
@@ -36,8 +38,18 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   if (q) paginationParams.set("q", q);
   if (sort !== "newest") paginationParams.set("sort", sort);
 
+  const sidebarCategories = categories.map((category) => ({
+    id: category.id,
+    slug: category.slug,
+    name: category.name,
+    count: 0,
+  }));
+
   return (
-    <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+    <>
+      <MobileSearchScreen q={q} items={items} total={total} categories={sidebarCategories} />
+      <div className="hidden lg:block">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
       <header className="mb-12 border-b border-border pb-8">
         <h1 className="font-heading text-5xl leading-tight sm:text-6xl">
           {q ? `Results for “${q}”` : "Search"}
@@ -77,6 +89,8 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
           <CategoryPagination pathname="/search" searchParams={paginationParams} page={page} totalPages={totalPages} />
         </>
       )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 }
