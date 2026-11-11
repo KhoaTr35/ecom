@@ -31,7 +31,6 @@ export default async function WallPage() {
   }));
 
   const tiles = await toProductCards(items, pricingOpts);
-  const multiImage = tiles.filter((t) => t.imageCount > 1);
   const onSale = tiles.filter((t) => t.fromPrice < t.fromBase);
 
   return (
@@ -47,18 +46,12 @@ export default async function WallPage() {
           <TabsTrigger value="all" className="h-[46px] flex-1 rounded-none">
             All · {tiles.length}
           </TabsTrigger>
-          <TabsTrigger value="multi-image" className="h-[46px] flex-1 rounded-none">
-            Multi-image · {multiImage.length}
-          </TabsTrigger>
           <TabsTrigger value="on-sale" className="h-[46px] flex-1 rounded-none">
             On sale · {onSale.length}
           </TabsTrigger>
         </TabsList>
         <TabsContent value="all" className="pt-0.5">
           <WallTileGrid products={tiles} />
-        </TabsContent>
-        <TabsContent value="multi-image" className="pt-0.5">
-          <WallTileGrid products={multiImage} />
         </TabsContent>
         <TabsContent value="on-sale" className="pt-0.5">
           <WallTileGrid products={onSale} />

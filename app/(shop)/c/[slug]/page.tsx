@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
-import { Play } from "lucide-react";
 import { listCategories, listProducts, getCategoryFacets } from "@/lib/catalog";
 import { toProductCards } from "@/lib/catalog/product-pricing";
 import { SORT_VALUES, type CategoryFilterConfig, type ProductSort } from "@/lib/catalog/facets";
@@ -85,18 +84,9 @@ export default async function CategoryPage({
           tree below). */}
       <div className="lg:hidden">
         <MobileScreenHeader backHref="/wall" />
-        <div className="flex items-end justify-between gap-3 px-4 pb-4">
-          <div>
-            <span className="label-eyebrow text-muted-foreground">Collection · {total} pieces</span>
-            <h1 className="mt-1.5 font-heading text-[32px] leading-tight">{category.name}</h1>
-          </div>
-          <Link
-            href={`/?scope=new-in`}
-            className="flex h-11 shrink-0 items-center gap-2 rounded-full bg-foreground px-3.5 text-xs font-semibold text-background"
-          >
-            <Play className="size-3" fill="currentColor" />
-            Play as reel
-          </Link>
+        <div className="px-4 pb-4">
+          <span className="label-eyebrow text-muted-foreground">Collection · {total} pieces</span>
+          <h1 className="mt-1.5 font-heading text-[32px] leading-tight">{category.name}</h1>
         </div>
 
         <MobileFilterChips facets={facets} sort={sort} total={total} />
