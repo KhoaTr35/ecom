@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // cacheComponents/PPR requires every dynamic read (auth, DB, cookies) to be
   // wrapped in <Suspense>. Almost every page here is inherently per-request
   // (cart, checkout, admin), so it fights the architecture more than it helps.
+  experimental: {
+    agentUpgrade: "security",
+  },
   images: {
     // Seed data ships SVG placeholders under /public/products.
     dangerouslyAllowSVG: true,
