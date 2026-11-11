@@ -36,13 +36,13 @@ export function WallProfileHeader({
           href="/c/new-arrivals"
           className="flex h-11 flex-1 items-center justify-center rounded-md bg-foreground text-[12px] font-semibold uppercase tracking-[0.08em] text-background"
         >
-          Shop the collection
+          New Arrival
         </Link>
         <Link
-          href="/return-policy"
+          href="/collections"
           className="flex h-11 flex-1 items-center justify-center rounded-md bg-muted text-[12px] font-semibold uppercase tracking-[0.08em]"
         >
-          Information
+          Collections
         </Link>
       </div>
     </section>

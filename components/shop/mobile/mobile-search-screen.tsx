@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search as SearchIcon } from "lucide-react";
+import { ChevronRight, Search as SearchIcon } from "lucide-react";
 import { ProductCard } from "@/components/shop/product-card";
+import { CollectionCircle } from "@/components/shop/mobile/collection-circle";
 import type { SidebarCategory } from "@/components/shop/collections-sidebar";
 import type { ProductCardData } from "@/lib/catalog/product-pricing";
 
@@ -117,21 +118,18 @@ export function MobileSearchScreen({
       )}
 
       <section className="px-4 pt-6">
-        <h2 className="label-eyebrow mb-3">Browse collections</h2>
+        <div className="mb-3 flex items-center justify-between">
+          <h2 className="label-eyebrow">Browse collections</h2>
+          <Link href="/collections" className="flex items-center gap-0.5 text-xs text-muted-foreground">
+            View all
+            <ChevronRight className="size-3.5" strokeWidth={2} />
+          </Link>
+        </div>
         <div className="flex gap-4 overflow-x-auto">
-          {categories.map((category, i) => (
-            <Link key={category.id} href={`/c/${category.slug}`} className="flex w-[70px] shrink-0 flex-col items-center gap-1.5">
-              <span
-                className={
-                  i % 2 === 0
-                    ? "flex size-[62px] items-center justify-center rounded-full bg-foreground font-heading text-base text-background"
-                    : "flex size-[62px] items-center justify-center rounded-full border border-border font-heading text-base"
-                }
-              >
-                {category.name[0]}
-              </span>
-              <span className="text-center text-[11px] leading-tight">{category.name}</span>
-            </Link>
+          {categories.slice(0, 4).map((category, i) => (
+            <div key={category.id} className="w-[70px] shrink-0">
+              <CollectionCircle category={category} index={i} size={62} />
+            </div>
           ))}
         </div>
       </section>
