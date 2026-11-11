@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Close crop: hardware clasp + stitched edge -->
+    <circle cx="300" cy="320" r="30"/>
+    <path d="M300 350 v60"/>
+    <path d="M180 440 h240"/>
+    <path d="M200 470 h200"/>
+  </g>
+</svg>

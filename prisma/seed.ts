@@ -23,7 +23,7 @@ async function seedCategories() {
   const bySlug = new Map<string, string>();
   for (const c of seedData.categories) {
     const category = await prisma.category.create({
-      data: { slug: c.slug, name: c.name, filters: c.filters },
+      data: { slug: c.slug, name: c.name, filters: c.filters, tagline: c.tagline, heroMediaUrl: c.heroMediaUrl },
     });
     bySlug.set(c.slug, category.id);
   }

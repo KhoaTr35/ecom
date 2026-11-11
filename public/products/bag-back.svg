@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="600" height="800">
+  <rect width="600" height="800" fill="#f4f4f5"/>
+  <g fill="none" stroke="#a1a1aa" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Reverse side: body outline plus a back slip pocket seam -->
+    <path d="M186 318 L414 318 L444 606 L156 606 Z"/>
+    <path d="M232 318 V256 a46 46 0 0 1 92 0 V318" transform="translate(-14 0)"/>
+    <path d="M232 318 V256 a46 46 0 0 1 92 0 V318" transform="translate(62 0)"/>
+    <path d="M206 420 h188"/>
+  </g>
+</svg>

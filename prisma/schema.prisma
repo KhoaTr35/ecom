@@ -127,11 +127,13 @@ model Address {
 }
 
 model Category {
-  id       String  @id @default(cuid())
-  parentId String?
-  slug     String  @unique
-  name     String
-  filters  Json // { variantAxes: string[], filters: string[] }
+  id           String  @id @default(cuid())
+  parentId     String?
+  slug         String  @unique
+  name         String
+  filters      Json // { variantAxes: string[], filters: string[] }
+  tagline      String? // reel subcopy shown on the mobile Feed's collection slide
+  heroMediaUrl String? // 9:16 still image for the collection reel
 
   products Product[]
 }
