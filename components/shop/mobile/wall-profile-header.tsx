@@ -28,7 +28,7 @@ export function WallProfileHeader({
       <div>
         <p className="font-heading text-xl">Atelier</p>
         <p className="mt-1 text-sm leading-relaxed">{tagline}</p>
-        <p className="mt-1 text-xs text-muted-foreground">Demo storefront · CO3027 course project</p>
+        <p className="mt-1 text-xs text-muted-foreground">10 a.m - 9 p.m | District 1, Ho Chi Minh City</p>
       </div>
 
       <div className="flex gap-2">
