@@ -18,16 +18,12 @@ Site đã deploy: **https://atelier-neon-xi.vercel.app**
 - **Giao diện web (desktop):** mở thẳng https://atelier-neon-xi.vercel.app/
 - **Giao diện mobile-first:** mở https://atelier-neon-xi.vercel.app/mobile
 
-Trang `/mobile` nhúng site thật trong khung đúng kích thước viewport của
-**iPhone 16 Pro** (402×874 CSS point, tỉ lệ pixel 3x theo thông số Apple —
-`app/mobile/page.tsx`), kèm khung bezel + "Dynamic Island" cho giống máy
-thật. Đây **không phải** công cụ chỉ dùng khi code (xem mục dưới) — route
-này build vào production thật, chủ động để giảng viên xem được giao diện
-mobile-first ngay trên laptop mà không cần điện thoại. Lý do phải dùng
-iframe thay vì chỉ resize `<div>`: class `lg:` của Tailwind phản ứng theo
-viewport trình duyệt thật, không theo bề rộng phần tử cha — một cửa sổ
-laptop ≥1024px luôn hiện nửa desktop dù có bọc trong div nhỏ thế nào; chỉ
-iframe mới có viewport riêng, kích hoạt đúng lại breakpoint mobile.
+Trang `/mobile` nhúng site thật (`/wall`) trong khung đúng kích thước
+viewport của **iPhone 16 Pro** (402×874 CSS point, tỉ lệ pixel 3x theo thông
+số Apple — `app/mobile/page.tsx`), kèm bezel + "Dynamic Island". Đây **không
+phải** công cụ chỉ dùng khi code (xem mục cuối bài, lý do phải dùng iframe
+giải thích ở đó) — route này build vào production thật, để giảng viên xem
+được giao diện mobile-first ngay trên laptop mà không cần điện thoại.
 
 Mở thẳng https://atelier-neon-xi.vercel.app/ trên **điện thoại thật** cũng
 ra đúng giao diện mobile-first này, không cần qua `/mobile` — route đó chỉ
@@ -248,29 +244,16 @@ Postgres tự cài (không Docker), phải tạo trước bằng
 throw — trang catalog (`lib/catalog`) tự rơi về dữ liệu mock nên vẫn chạy
 được, nhưng đăng ký/đăng nhập (Better Auth, không có fallback) sẽ lỗi.
 
-### [Kế hoạch tương lai] Chuyển sang DB hosted (Supabase/Neon)
+### Database dùng chung (Supabase) — production + team shared
 
-Chưa làm, mới chỉ kiểm tra tính khả thi — nhưng kiến trúc hiện tại đã sẵn sàng
-cho việc này, không cần đổi code:
-
-- `lib/db.ts` (app runtime) đọc `DATABASE_URL`; `prisma.config.ts` (CLI —
-  migrate/studio) đọc `DIRECT_URL`. Đây đúng là mô hình pooled/direct mà
-  Supabase và Neon đều dùng (Supabase: cổng `6543` qua PgBouncer cho
-  `DATABASE_URL`, cổng `5432` trực tiếp cho `DIRECT_URL`).
-- Chuyển sang Supabase: tạo project, lấy 2 connection string đó bỏ vào
-  `.env`, chạy `pnpm db:migrate` (hoặc `db:deploy`) rồi `pnpm db:seed` như
-  bình thường.
-- Lưu ý: PgBouncer của Supabase mặc định chạy transaction-mode, có thể cần
-  thêm `?pgbouncer=true` vào `DATABASE_URL` để Prisma không lỗi vì prepared
-  statements — phải test thật một request ghi (đặt thử 1 đơn) sau khi đổi,
-  không chỉ test kết nối được.
-- Đây là đổi **schema**, không mang theo **data** — dữ liệu đang test ở
-  Postgres local (Docker) không tự chuyển qua; muốn có dữ liệu thì chạy lại
-  `pnpm db:seed` trên DB mới, hoặc tự `pg_dump`/`pg_restore` nếu cần giữ
-  nguyên dữ liệu cũ.
-- Một khi là DB dùng chung thật (không chỉ máy mình), phải đổi
-  `BETTER_AUTH_SECRET` sang giá trị mới tự sinh — giá trị trong
-  `.env.example` chỉ an toàn cho local/demo (xem ghi chú ở phần Cài đặt).
+Site deploy thật và cả nhóm dùng chung một project Supabase (không phải mỗi
+người tự chạy DB riêng). `.env.example` có sẵn chi tiết 2 connection string
+(`DATABASE_URL` pooler transaction-mode cổng `6543`, `DIRECT_URL` session-mode
+cổng `5432`) và gotcha SSL cần nhớ (`uselibpqcompat=true` trên `DATABASE_URL`).
+Muốn trỏ vào Supabase thay vì Docker local: copy 2 string đó từ Supabase
+dashboard → `.env`, rồi `pnpm db:migrate`/`db:seed` như thường — xem mục
+"Dữ liệu lịch sử sau khi seed" ở trên, **seed sẽ xoá dữ liệu chung của cả
+nhóm**, hỏi trước khi chạy.
 
 ### Truy cập database để kiểm tra
 
@@ -327,16 +310,14 @@ qua REST Route Handlers** (`app/api/*`, bọc `withAuth`). Logic nghiệp vụ n
 trong `lib/*`; `app/` chỉ là lớp mỏng gọi vào đó. Chi tiết cấu trúc thư mục và
 quy ước code xem `AGENTS.md`.
 
-## Trạng thái hiện tại (skeleton)
+## Trạng thái hiện tại
 
-Đã có: cấu trúc repo đầy đủ theo kế hoạch, Prisma schema + seed, Better Auth
-(đăng ký/đăng nhập + vai trò + JWT), giỏ hàng tạm → đồng bộ khi đăng nhập,
-đặt hàng (COD và VNPay sandbox đều hoạt động đầy đủ), tự hủy đơn khi còn ở
-bước đầu, trang admin có CRUD sản phẩm (xem phần "Quản lý sản phẩm" trên),
-dashboard KPI + funnel đọc dữ liệu thật (có cookie consent gate — xem phần
-"Analytics & cookie consent"), gợi ý "Thường mua cùng" tính từ lịch sử đơn
-thật, 7 danh mục duyệt được qua poster grid + Sidebar trên trang chủ (xem
-phần "Danh mục"), FAQ chat widget hỏi-đáp cố định, và preview layout
-desktop/mobile cho dev (xem 2 phần cuối). Các việc còn lại nằm rải rác
-trong code dưới dạng comment `TODO (IMP-xx)`, tham chiếu đúng task trong
-kế hoạch.
+Đã deploy production (Vercel + Supabase, xem mục đầu bài). Đã có: Prisma
+schema + seed, Better Auth (đăng ký/đăng nhập + vai trò + JWT), giỏ hàng tạm
+→ đồng bộ khi đăng nhập, đặt hàng (COD và VNPay sandbox), tự hủy đơn khi còn
+ở bước đầu, admin CRUD sản phẩm, dashboard KPI + funnel đọc dữ liệu thật
+(cookie consent gate), gợi ý "Thường mua cùng", 7 danh mục duyệt qua poster
+grid + Sidebar, FAQ chat widget, giao diện mobile-first riêng (Feed/Wall/tab
+bar) kèm route demo `/mobile`, và preview layout desktop/mobile cho dev. Việc
+còn lại nằm rải rác trong code dưới dạng comment `TODO (IMP-xx)`, tham chiếu
+đúng task trong kế hoạch.
