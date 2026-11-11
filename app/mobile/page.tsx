@@ -9,6 +9,10 @@ import Link from "next/link";
 const PHONE_WIDTH_PX = 402;
 const PHONE_HEIGHT_PX = 874;
 const PHONE_ASPECT_RATIO = `${PHONE_WIDTH_PX} / ${PHONE_HEIGHT_PX}`;
+// Reserved status-bar strip above the iframe, sized to hold the Dynamic
+// Island with clearance — see the comment at the frame below for why this
+// has to be reserved space rather than an overlay.
+const STATUS_BAR_HEIGHT_PX = 36;
 
 /**
  * Demo route: the real site, framed at iPhone 16 Pro width, so the
@@ -38,26 +42,45 @@ export default function MobilePreviewPage() {
         </Link>
       </div>
 
-      {/* No width or height of its own — sized entirely by wrapping the
-          iframe's border-box, so the border never eats into the exact
-          dimensions that need to land on the iframe itself. */}
-      <div className="relative inline-block rounded-[3rem] border-[10px] border-foreground/90 bg-foreground/90 shadow-xl">
-        {/* Dynamic Island */}
-        <div className="absolute inset-x-0 top-2 z-10 mx-auto h-7 w-28 rounded-full bg-foreground/90" />
+      {/* No width or height of its own — sized entirely by wrapping its
+          children's border-box, so the border never eats into the exact
+          dimensions that need to land on the iframe itself. overflow-hidden
+          + one border-radius here (not on the children individually) clips
+          the status-bar strip and the iframe into a single rounded phone
+          shape, so their corners can't mismatch. */}
+      <div className="relative inline-flex flex-col overflow-hidden rounded-[2.5rem] border-[10px] border-foreground/90 bg-foreground/90 shadow-xl">
+        {/* Status-bar strip, reserved space above the iframe — not an
+            overlay on top of it. An earlier version absolute-positioned the
+            Dynamic Island over the iframe's own top edge, which worked by
+            luck only because the real site's pages don't reserve a safe
+            area at the top (only the bottom tab bar uses
+            env(safe-area-inset-bottom)); any page whose content actually
+            starts at the very top — the Wall's profile header — collided
+            with the island. Reserving real space here means no page inside
+            the iframe can ever collide with it, regardless of that page's
+            own layout. */}
+        <div className="flex h-9 shrink-0 items-center justify-center bg-background">
+          <div className="h-6 w-28 rounded-full bg-foreground/90" />
+        </div>
         {/* Driven from height, not width: on a laptop screen the vertical
             space is the binding constraint (a 874px-tall phone mockup
             rarely fits under a page header), so height is set directly
             (capped at the device's true 874px — never scale up past real
             size) and width is left to `aspect-ratio` to derive. Setting
-            width directly instead — as the first version of this frame
+            width directly instead — as an earlier version of this frame
             did — let an independent `max-height` clip the box without
             shrinking width to match, silently distorting the proportions
-            on any laptop shorter than ~900px of available viewport. */}
+            on any laptop shorter than ~900px of available viewport. The
+            status-bar strip's height comes out of the same budget so the
+            overall frame still fits. */}
         <iframe
-          src="/"
+          src="/wall"
           title="Mobile UI preview — iPhone 16 Pro"
-          className="block rounded-[2.25rem] bg-background"
-          style={{ height: `min(calc(100svh - 14rem), ${PHONE_HEIGHT_PX}px)`, aspectRatio: PHONE_ASPECT_RATIO }}
+          className="block bg-background"
+          style={{
+            height: `min(calc(100svh - 14rem - ${STATUS_BAR_HEIGHT_PX}px), ${PHONE_HEIGHT_PX}px)`,
+            aspectRatio: PHONE_ASPECT_RATIO,
+          }}
         />
       </div>
     </div>
