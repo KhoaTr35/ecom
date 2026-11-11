@@ -61,24 +61,38 @@ thể làm tiếp nếu muốn đồng bộ.
 
 ## Dữ liệu lịch sử sau khi seed
 
-`pnpm db:seed` (`prisma/seed.ts`) không chỉ nạp catalog/tài khoản mà còn tạo
-sẵn lịch sử để trang admin có gì đó để hiện ngay, không cần tự thao tác trước:
+> [!WARNING]
+> **`pnpm db:seed` XOÁ DỮ LIỆU trước khi nạp lại.** Nó gọi `deleteMany()` trên
+> 12 bảng: `orderItem`, `payment`, `order`, `analyticsEvent`, `cartItem`,
+> `cart`, `productImage`, `productVariant`, `product`, `category`,
+> `shippingMethod`, `priceRule`. **Cả nhóm đang dùng CHUNG một database
+> Supabase** (xem mục "Database" dưới), nên chạy seed là xoá luôn dữ liệu của
+> người khác — **hỏi nhóm trước khi chạy**. Những bảng *không* bị xoá:
+> `User`, `Session`, `Address`, `AuditLog` — nên tài khoản demo và sổ địa chỉ
+> vẫn còn, chỉ đơn hàng/giỏ/analytics của chúng là mất. Muốn phá dữ liệu tự
+> do thì dùng Postgres local qua Docker (mục "Cài đặt"), đừng dùng Supabase.
 
-- **18 đơn hàng** (`seedOrderHistory`) trải trong 30 ngày gần nhất, đủ cả 5
-  nhóm trạng thái trên `/admin/orders` (Pending/Processing/Shipped/
-  Delivered/Cancelled). Hai cặp sản phẩm cố định (áo khoác len + quần ống
-  rộng; đầm lụa + bông tai) lặp lại ở vài đơn để mục "Frequently bought
-  together" trên trang sản phẩm có tín hiệu thật, không chỉ fallback cùng
-  danh mục. Không đụng vào tồn kho (`ProductVariant.stock`) — đây là đơn
-  lịch sử, không phải đơn đang giữ hàng.
-- **66 analytics event** (`seedAnalyticsEvents`) — một "phiên" mỗi ngày
-  trong 30 ngày, lặp theo chu kỳ 10 ngày với tỷ lệ phễu giảm dần
-  (100% page_view → 60% product_view → 30% add_to_cart → 20%
-  begin_checkout → 10% purchase), để tile "Visits" và biểu đồ "Funnel" trên
-  `/admin/analytics` không bị kẹt ở 0 như khi mới code xong (xem phần dưới).
+`pnpm db:seed` (`prisma/seed.ts` + `prisma/seed-demo-history.ts`) không chỉ nạp
+catalog/tài khoản mà còn tạo sẵn lịch sử để trang admin có gì đó để hiện ngay,
+không cần tự thao tác trước. Toàn bộ sinh bằng phép toán theo chỉ số (không
+`Math.random`) nên mọi người seed lại đều ra **cùng một** dashboard:
 
-Seed lại (`pnpm db:seed`) sẽ xoá sạch đơn + event cũ rồi tạo lại, chạy nhiều
-lần không bị trùng lặp/tăng dần.
+- **70 đơn hàng** (`seedOrderHistory`) trải trong 30 ngày gần nhất, 2–3 đơn
+  mỗi ngày, đủ cả 5 nhóm trạng thái trên `/admin/orders` (Pending/Processing/
+  Shipped/Delivered/Cancelled). 29/30 ngày có ít nhất một đơn tính doanh thu
+  (`PAID`/`PROCESSING`/`SHIPPED`/`DELIVERED`) để biểu đồ doanh thu theo ngày
+  là một đường xu hướng chứ không phải vài cột lẻ. Hai cặp sản phẩm cố định
+  (áo khoác len + quần ống rộng; đầm lụa + bông tai) lặp ở các đơn có trạng
+  thái **`PAID`/`DELIVERED`** — đúng điều kiện `lib/recommend` lọc, nếu để
+  trạng thái khác thì mục "Frequently bought together" sẽ im lặng rơi về
+  fallback cùng danh mục. Không đụng vào tồn kho (`ProductVariant.stock`) —
+  đây là đơn lịch sử, không phải đơn đang giữ hàng.
+- **~584 analytics event** (`seedAnalyticsEvents`) — khoảng 8–15 phiên mỗi
+  ngày trong 30 ngày (**~332 "Visits"**), phễu lồng nhau theo tỷ lệ thực tế:
+  100% page_view → ~46% product_view → ~18% add_to_cart → ~8% begin_checkout
+  → ~2,1% purchase. Tỷ lệ chuyển đổi trên dashboard vì vậy ra **~2,1%** thay
+  vì 10% như bản seed cũ (1 phiên/ngày) — con số 10% là không thực tế với
+  TMĐT và dễ bị hỏi khi demo.
 
 ## Analytics & cookie consent
 
