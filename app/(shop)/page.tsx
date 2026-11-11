@@ -67,7 +67,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
                 <Button
                   size="lg"
                   className="label-eyebrow mt-10 h-12 px-10"
-                  render={<Link href="/c/new-arrivals">Shop the collection</Link>}
+                  render={<Link href="/c/new-arrivals">New Arrival</Link>}
                 />
               </div>
             </section>
