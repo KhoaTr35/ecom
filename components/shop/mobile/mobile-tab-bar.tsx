@@ -7,9 +7,9 @@ import { useGuestCart } from "@/components/shop/guest-cart-context";
 import { cn } from "cn";
 
 const TABS = [
-  { href: "/", label: "Feed", icon: Play },
   { href: "/wall", label: "Wall", icon: LayoutGrid },
   { href: "/search", label: "Search", icon: Search },
+  { href: "/", label: "Feed", icon: Play },
   { href: "/cart", label: "Bag", icon: ShoppingBag },
   { href: "/account/orders", label: "Me", icon: User },
 ] as const;

@@ -10,6 +10,7 @@ import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/s
 import { CollectionPosterGrid } from "@/components/shop/collection-poster-grid";
 import { CollectionsSidebar } from "@/components/shop/collections-sidebar";
 import { FeedReelScroller } from "@/components/shop/mobile/feed-reel-scroller";
+import { MobileFirstVisitRedirect } from "@/components/shop/mobile/mobile-first-visit-redirect";
 
 const FEED_SCOPES: FeedScope[] = ["for-you", "new-in", "sale"];
 
@@ -40,6 +41,7 @@ export default async function HomePage({ searchParams }: { searchParams: Promise
 
   return (
     <>
+      <MobileFirstVisitRedirect />
       <div className="lg:hidden">
         <FeedReelScroller items={feed.items} scope={scope} />
       </div>
