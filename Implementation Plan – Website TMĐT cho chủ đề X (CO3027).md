@@ -21,11 +21,11 @@ Tài liệu này là phiên bản dành cho người code của kế hoạch BTL
 **Trong phạm vi**
 
 - Xem sản phẩm không cần đăng nhập; giỏ tạm cho khách chưa đăng nhập; đăng nhập bắt buộc ở checkout và trang cá nhân.
-- Checkout có tùy chọn giao hàng, giữ kho 15 phút, VNPay sandbox và COD.
+- Checkout có tùy chọn giao hàng, giữ kho 15 phút, **COD**; adapter VNPay nằm trong code (ký HMAC, IPN, state machine) nhưng không chạy giao dịch sandbox thật.
 - Admin: sản phẩm, tồn kho, đơn hàng, dashboard KPI.
 - Pricing Engine, gợi ý sản phẩm, analytics, tuân thủ (footer, chính sách, cookie).
 
-**Ngoài phạm vi:** microservices, app native, marketplace nhiều người bán, API vận chuyển thật, chatbot chạy thật, thu tiền thật. Các tính năng P2 (coupon, email, review/wishlist, OpenAPI, E2E…) chỉ làm khi dư thời gian.
+**Ngoài phạm vi:** microservices, app native, marketplace nhiều người bán, API vận chuyển thật, chatbot chạy thật, thu tiền thật, **giao dịch VNPay sandbox thật** (chốt 10/11/2026 — code adapter vẫn nộp và vẫn có unit test chữ ký, nhưng không demo luồng thanh toán sandbox qua cổng; COD là luồng thanh toán được demo). Các tính năng P2 (coupon, email, review/wishlist, OpenAPI, E2E…) chỉ làm khi dư thời gian.
 
 **Trạng thái X:** đã chốt — **ATELIER**, thời trang may sẵn và phụ kiện (áo khoác, đầm, len, quần tây, túi, trang sức), biến thể theo size thay vì màu. Mọi task đánh dấu **\[X\]** có thể triển khai với dữ liệu thật trong `prisma/seed-data.json`.
 
@@ -39,12 +39,12 @@ Một repo Next.js full-stack theo mô hình lai: **đọc bằng Server Compone
 | Framework | Next.js App Router | Route Handlers chạy Node runtime (Prisma, ký HMAC) |
 | UI | Tailwind CSS v4 + shadcn/ui, `lucide-react` | Mobile-first; màu, font qua CSS variables |
 | Form + validation | React Hook Form + Zod | Schema Zod dùng chung client/server trong `lib/validation` |
-| DB + ORM | PostgreSQL trên Neon (Singapore) + Prisma | Tiền lưu bằng `Int` (VNĐ), không dùng số thực |
+| DB + ORM | PostgreSQL trên Supabase (`ap-southeast-1`, Singapore) + Prisma | Tiền lưu bằng `Int` (VNĐ), không dùng số thực; free tier — xem ràng buộc ở mục 10.2 |
 | Xác thực | Better Auth (email/password, vai trò) + plugin JWT | Web: cookie phiên; Postman/client khác: `Bearer` JWT |
 | Ảnh | Ảnh seed trong `public/`; ảnh admin upload qua Vercel Blob | `next/image` lo resize, WebP |
-| Thanh toán | VNPay sandbox (tự viết adapter), COD | Không lưu dữ liệu thẻ |
+| Thanh toán | **COD** (luồng demo chính); adapter VNPay có sẵn trong code nhưng **không chạy giao dịch sandbox thật** — xem mục 1 "Ngoài phạm vi" | Không lưu dữ liệu thẻ |
 | Analytics | Bảng `AnalyticsEvent` riêng + GA4 (sau đồng ý cookie) | Dashboard KPI đọc từ bảng riêng |
-| Test | Vitest (unit, integration với DB test), Playwright (P2) | DB test: Neon branch hoặc Postgres Docker |
+| Test | Vitest (unit, integration với DB test), Playwright (P2) | DB test: Postgres Docker local — không chạy test ghi hàng loạt lên Supabase để tránh tốn egress/quota |
 | Deploy / CI | Vercel Hobby (region `sin1`), GitHub Actions | CI: lint, typecheck, test; Vercel build và preview mỗi PR |
 
 **Biến môi trường** (khai báo trong `.env.example`, giá trị thật chỉ nằm trên Vercel và máy cá nhân)
@@ -54,7 +54,7 @@ Một repo Next.js full-stack theo mô hình lai: **đọc bằng Server Compone
 | `DATABASE_URL`, `DIRECT_URL` | Prisma (pooled / migrate) | Có |
 | `APP_URL` | URL gốc, dùng cho kiểm tra `Origin` và URL trả về của VNPay | Có |
 | `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL` | Better Auth | Có |
-| `VNP_TMN_CODE`, `VNP_HASH_SECRET`, `VNP_PAY_URL`, `VNP_RETURN_URL` | VNPay sandbox | Có |
+| `VNP_TMN_CODE`, `VNP_HASH_SECRET`, `VNP_PAY_URL`, `VNP_RETURN_URL` | VNPay sandbox | Không (để trống — VNPay là future work) |
 | `BLOB_READ_WRITE_TOKEN` | Upload ảnh admin | Có (từ Sprint 2) |
 | `CRON_SECRET` | Endpoint nhả kho tùy chọn | Không |
 | `NEXT_PUBLIC_GA_ID` | GA4 | Không |
@@ -545,14 +545,14 @@ Bảo mật là một trong 6 thành phần bắt buộc của mục 4.1. Test t
 | State machine | Cạnh hợp lệ đi qua; cạnh không hợp lệ → `INVALID_TRANSITION`; hủy thì hoàn kho | Unit + integration |
 | E2E (P2) | Giỏ tạm → đăng nhập → checkout COD → admin xác nhận | Playwright |
 
-Integration test chạy trên DB riêng (Neon branch `test` hoặc Postgres Docker), reset bằng `prisma migrate reset` trước mỗi lần chạy. CI chạy unit test mọi PR; integration test chạy khi PR đụng `lib/order`, `lib/payment`, `lib/cart`, `lib/auth`.
+Integration test chạy trên Postgres Docker local, reset bằng `prisma migrate reset` trước mỗi lần chạy — không chạy integration test thẳng vào Supabase (tránh tốn egress/quota và tránh phá dữ liệu môi trường chung). CI chạy unit test mọi PR; integration test chạy khi PR đụng `lib/order`, `lib/payment`, `lib/cart`, `lib/auth`.
 
 ### 8.3 Kịch bản kiểm tra thủ công trước khi nộp
 
 - [ ] Khách vãng lai xem, lọc, thêm giỏ; đăng nhập; giỏ được giữ nguyên
-- [ ] Thanh toán VNPay sandbox thành công và thất bại; đơn đúng trạng thái
-- [ ] Đơn VNPay bỏ dở quá 15 phút → bị hủy, kho được hoàn
-- [ ] COD với cả 3 phương thức giao hàng; phí ship đúng
+- [ ] COD với cả 3 phương thức giao hàng; phí ship đúng — đây là luồng thanh toán được demo
+- [ ] Hủy đơn COD (`PENDING_CONFIRM`) từ `/account/orders` → kho được hoàn
+- [ ] ~~Thanh toán VNPay sandbox~~ — ngoài phạm vi (mục 1); chỉ còn unit test chữ ký HMAC ở mục 8.2
 - [ ] Admin tạo sản phẩm có ảnh, sửa tồn kho, chuyển trạng thái đơn
 - [ ] Luật giá khung giờ / tồn kho / phân khúc hiển thị đúng trên trang sản phẩm và checkout
 - [ ] Dashboard KPI có số liệu sau các lần mua thử
@@ -567,7 +567,7 @@ Chỉ gồm việc code, lấy từ mục 6 của kế hoạch chính (giờ và
 | ID | Task | Tiêu chí nghiệm thu | Owner | Giờ | Phụ thuộc |
 | --- | --- | --- | --- | --- | --- |
 | IMP-01 | Khởi tạo repo: Next.js, TypeScript strict, Tailwind, shadcn/ui, Prisma, Better Auth, ESLint/Prettier | `pnpm dev` chạy; cấu trúc thư mục đúng mục 3 | A | 3 | — |
-| IMP-02 | CI GitHub Actions + deploy Vercel (`sin1`) + Neon (Singapore) | PR có CI xanh và bản preview; `main` deploy production | A | 3 | IMP-01 |
+| IMP-02 | CI GitHub Actions + Supabase (`ap-southeast-1`) | PR có CI xanh; app đọc/ghi được Supabase (deploy Vercel tách ra, xem mục 10.2) | A | 3 | IMP-01 |
 | IMP-03 | Schema v1 (mục 4) + migration + seed 5–10 sản phẩm giả, 3 phương thức giao hàng, tài khoản demo | `pnpm db:seed` chạy lặp được; production đọc được DB | A | 4 | IMP-01 |
 | IMP-04 | `AGENTS.md`, `.env.example`, template PR | Có đủ nội dung mục 3; cả nhóm đã đọc | C | 1 | IMP-01 |
 | IMP-05 | Layout chung mobile-first: header, footer, theme qua CSS variables | Đúng trên màn 375px và 1280px | B | 3 | IMP-01 |
@@ -618,7 +618,7 @@ Chỉ gồm việc code, lấy từ mục 6 của kế hoạch chính (giờ và
 | ID | Task | Tiêu chí nghiệm thu | Owner | Giờ | Phụ thuộc |
 | --- | --- | --- | --- | --- | --- |
 | IMP-50 | Sửa lỗi + chạy kịch bản kiểm tra 8.3 trên production | Mọi mục 8.3 được tick | A | 3 | Code freeze |
-| IMP-51 | README + `.env.example` + dump database (mục 10.3) | Một người không tham gia code cài được từ đầu theo README | A | 3 | IMP-50 |
+| IMP-51 | README + `.env.example` (mục 10.3; không cần dump — xem 10.3) | Một người không tham gia code cài được từ đầu theo README | A | 3 | IMP-50 |
 
 ### P2 – chỉ làm khi dư thời gian (theo thứ tự)
 
@@ -649,24 +649,54 @@ Chỉ gồm việc code, lấy từ mục 6 của kế hoạch chính (giờ và
 
 ### 10.2 Deploy và migration
 
+**Trạng thái hạ tầng (10/11/2026):** Supabase MCP và Vercel MCP đã kết nối, verify bằng tool call. Supabase: project **`pjelkjclqgmuzbhizski`** ("ecom", region `ap-southeast-1` Singapore, Postgres 17, `ACTIVE_HEALTHY`) — **đây là project Supabase duy nhất được dùng**, không tạo thêm. (Project cũ ở `ap-southeast-2`/Sydney đã bị xoá và tạo lại ở Singapore cho gần Việt Nam hơn.) Vercel: team `kh-tran` (Hobby), chưa có project — **deploy Vercel chưa chốt thiết kế, nằm ngoài phạm vi đợt này**; runbook chi tiết: `plans/261110-1334-supabase-vercel-deploy-migration/plan.md`.
+
+**Quyết định kiến trúc:** bỏ Neon + bỏ mô hình "1 branch DB/PR" + bỏ luôn việc tách môi trường. **Một database duy nhất, một view** — máy cá nhân của mọi thành viên, và sau này cả bản deploy Vercel, đều trỏ vào cùng project Supabase trên. Đánh đổi (chấp nhận có chủ ý): không có cách ly dữ liệu, nên `pnpm db:seed` của một người sẽ **xoá dữ liệu của cả nhóm**. README phải cảnh báo rõ điều này (mục 10.3).
+
 | Môi trường | Nguồn | Database | Ghi chú |
 | --- | --- | --- | --- |
-| Local | Máy cá nhân | Neon branch riêng hoặc Postgres Docker | VNPay qua ngrok/cloudflared nếu cần |
-| Preview | Mỗi PR | Neon branch dùng chung cho preview | Không nhận IPN; header `noindex` |
-| Production | `main` | Neon nhánh chính | Test VNPay đầy đủ ở đây |
+| Local (mọi thành viên) | Máy cá nhân | Supabase `pjelkjclqgmuzbhizski` | Docker Postgres giữ lại làm fallback, không dùng hằng ngày |
+| Deploy (sau này) | `main` | Cùng project trên | Ghi vào đúng các hàng mà local đang đọc — không có preview riêng |
 
-- Build production chạy `prisma migrate deploy`; không bao giờ chạy `migrate dev` hay `migrate reset` trên production.
+**Kết nối: chỉ IPv4, không dùng direct connection.** Free tier để direct connection (`db.<ref>.supabase.co:5432`) ở **IPv6-only**; muốn IPv4 ở đó phải mua add-on. Cả hai URL của Prisma vì vậy đi qua shared pooler (đều IPv4 ở mọi tier):
+
+| Biến | Chế độ Supabase | Host:port |
+| --- | --- | --- |
+| `DATABASE_URL` (app runtime) | Pooler, transaction mode | `aws-<region>.pooler.supabase.com:6543` |
+| `DIRECT_URL` (Prisma CLI, migrate) | Pooler, **session** mode | `aws-<region>.pooler.supabase.com:5432` |
+
+Session mode là phiên Postgres thật (chạy được DDL, prepared statement, `pg_dump`) nên `migrate deploy` an toàn qua đó; transaction mode thì không. Lưu ý: **không** thêm `?pgbouncer=true` — đã verify `@prisma/adapter-pg` không đọc tham số này (đây là flag của Rust query engine, project này dùng driver adapter).
+
+- Deploy chạy `prisma migrate deploy`; **không bao giờ** `migrate dev` hay `migrate reset` lên Supabase (`migrate dev` có thể tự quyết định DB đã "drift" và hỏi reset = xoá sạch).
 - Đổi schema = migration mới trong PR riêng, A review.
-- Trước giờ demo hoặc khi giảng viên chấm: chạy lại seed nếu dữ liệu bẩn; mở trang trước vài phút để Neon thức dậy.
+- Trước giờ demo hoặc khi giảng viên chấm: mở trang trước vài phút nếu project đang paused (free tier tự pause khi lâu không hoạt động — miễn phí, không mất dữ liệu, chỉ cần unpause). Chỉ reseed khi cả nhóm đã biết.
+
+#### 10.2.1 Di chuyển dữ liệu từ Docker local sang Supabase
+
+Project Supabase mới là rỗng, nên dùng **seed lại**: `pnpm db:deploy` áp migration (`20261010085732_init`) rồi `pnpm db:seed` nạp catalog + tài khoản demo + lịch sử đơn/analytics. Lần này reset không phá gì vì chưa có dữ liệu. Không dùng `pg_dump`/restore từ Docker — dữ liệu local chỉ là seed tái tạo được, không có gì đáng mang theo.
+
+Seed cần **đủ dữ liệu để dashboard analytics trông như thật** (chi tiết và số liệu mục tiêu ở section 3 của runbook): nâng số session/ngày để "Visits" không còn là 1/ngày, chỉnh tỉ lệ funnel về mức hợp lý (conversion 2–3% thay vì 10%), và rải đơn hàng sao cho biểu đồ doanh thu theo ngày không bị rỗng ~2/3 số ngày. Giữ nguyên 2 cặp sản phẩm mua-cùng cố định (tín hiệu cho `lib/recommend`) và đủ 5 nhóm trạng thái đơn (cho filter `/admin/orders`).
+
+#### 10.2.2 Ràng buộc free tier Supabase — không vượt, không tạo subscription mới
+
+Tổ chức Supabase đang ở **Free Plan**, không có thẻ thanh toán gắn — nghĩa là vượt hạn mức sẽ bị **giới hạn dịch vụ** (read-only, pause) chứ không tự phát sinh hoá đơn. Rủi ro thật duy nhất là tự tay bật thứ gì đó trả phí. Quy tắc:
+
+- **Không tạo project hoặc branch Supabase mới** qua MCP (`create_project`, `create_branch`, `restore_project`) mà không hỏi người dùng trước và xem `get_cost` — mặc định là *không làm*, chỉ dùng project `pjelkjclqgmuzbhizski` đã có.
+- **Không bật add-on trả phí** trong Project Settings → Add-ons: Compute upgrade (mặc định Micro), PITR, Custom Domain, **IPv4 add-on** (không cần — đã đi qua pooler IPv4), Log Drains, Advanced MFA.
+- **Không đổi Organization Plan** từ Free sang Pro/Team, không thêm phương thức thanh toán.
+- **Dung lượng DB dưới 500MB** (ngưỡng free tier chuyển read-only; disk 1GB nhưng giới hạn thật là database size) — seed data hiện tại (catalog + 18 đơn + 66 event) nằm dưới vài chục MB nên dư nhiều; kiểm tra lại bằng `select pg_size_pretty(sum(pg_database_size(datname))) from pg_database;` nếu nghi ngờ phình to.
+- **Egress dưới 10GB/tháng** (5GB cached + 5GB uncached, tính chung Database/Auth/Storage/Functions) — tránh test tải (load test, spam seed/reset lặp lại), tránh chạy test suite ghi hàng loạt thẳng vào Supabase (xem dòng Test ở mục 2 — Vitest dùng Docker local).
+- Project free có thể tự pause khi không hoạt động một thời gian — việc này **miễn phí và không mất dữ liệu**, chỉ cần unpause trước demo; không nhầm với sự cố.
 
 ### 10.3 Sản phẩm nộp cho mục 4.2
 
 - **Source code:** link repo (hoặc file nén theo yêu cầu giảng viên) tại commit đã gắn tag `v1.0-submission`.
-- **Database:** `prisma/migrations` + `seed-data.json` + `seed.ts`; thêm file `database/dump.sql` (xuất bằng `pg_dump` từ production sau khi seed sạch và có vài đơn mẫu).
+- **Database:** `prisma/migrations` + `seed-data.json` + `seed.ts` + `seed-demo-history.ts`. Rubric 4.2 cho phép "dump **hoặc** migrate + seed" — chọn nhánh migrate + seed, **không nộp `dump.sql`**: seed là deterministic (không `Math.random`) nên ai chạy cũng ra đúng bộ dữ liệu như bản demo, lại nằm trong version control; một file dump song song chỉ thêm một nguồn sự thật thứ hai dễ lệch khi đổi schema.
 - **README** gồm:
-  1. Giới thiệu ngắn, link website đã deploy, tài khoản demo (Admin, Staff, Customer) và thẻ test VNPay sandbox.
-  2. Yêu cầu: Node.js LTS, pnpm, PostgreSQL (hoặc tài khoản Neon).
-  3. Cài đặt: `pnpm install` → copy `.env.example` thành `.env` → `pnpm db:migrate` → `pnpm db:seed` (hoặc nạp `dump.sql`) → `pnpm dev`.
+  1. Giới thiệu ngắn, link website đã deploy (nếu có), tài khoản demo (Admin, Staff, Customer). COD là luồng thanh toán demo — không có thẻ test VNPay vì VNPay là future work.
+  2. Yêu cầu: Node.js LTS, pnpm, tài khoản Supabase (hoặc PostgreSQL local nếu chạy thuần offline).
+  3. Cài đặt: `pnpm install` → copy `.env.example` thành `.env` → `pnpm db:migrate` → `pnpm db:seed` → `pnpm dev`.
+  7. **Cảnh báo bắt buộc về `pnpm db:seed`:** lệnh này xoá sạch dữ liệu nghiệp vụ (đơn, payment, analytics, giỏ, sản phẩm, danh mục, phương thức giao hàng, luật giá) trước khi nạp lại. Vì cả nhóm dùng **chung một** database Supabase (mục 10.2), chạy seed là xoá dữ liệu của người khác — phải hỏi nhóm trước. Với Postgres local qua Docker thì vô hại.
   4. Chạy test: `pnpm test`.
   5. Kiến trúc tóm tắt, cấu trúc thư mục, danh sách tính năng (đánh dấu tính năng tự làm và tính năng từ framework, khớp báo cáo 4.1).
   6. Ghi chú: website dùng gói miễn phí nên lần mở đầu có thể chậm vài giây.
@@ -675,9 +705,11 @@ Chỉ gồm việc code, lấy từ mục 6 của kế hoạch chính (giờ và
 
 | Rủi ro | Tác động | Giảm thiểu |
 | --- | --- | --- |
-| IPN sandbox không gọi về được | Kẹt đường găng ở IMP-15 | Làm IMP-02, IMP-06 ngay Sprint 0; test với ngrok; COD vẫn demo được |
+| ~~IPN sandbox không gọi về được~~ | Đã vô hiệu — VNPay sandbox ra khỏi phạm vi (mục 1), COD là luồng demo | — |
 | Better Auth + plugin JWT khác với tài liệu hoặc phần ví dụ cũ | IMP-10 trễ | Đọc tài liệu chính thức bản đang dùng; nếu plugin JWT vướng, tạm dùng cookie phiên cho mọi API và để Bearer JWT thành P2 |
-| Prisma + Neon serverless hết kết nối | Lỗi ngẫu nhiên trên production | Dùng URL pooled cho runtime, `DIRECT_URL` cho migrate; Prisma client singleton |
+| Prisma + Supabase pooler (Supavisor) hết kết nối hoặc lỗi prepared statement | Lỗi ngẫu nhiên khi chạy thật | `DATABASE_URL` = pooler transaction mode (6543), `DIRECT_URL` = pooler session mode (5432); Prisma client singleton; test một request **ghi** thật sau khi đổi connection string (read chạy được mà write lỗi là triệu chứng kinh điển). Đã verify prepared statement đang **tắt** (`lib/db.ts` không set `statementNameGenerator`) nên transaction mode an toàn — không cần `?pgbouncer=true` |
+| Direct connection của Supabase là IPv6-only trên free tier | `migrate deploy`, `pg_dump` không kết nối được từ mạng IPv4-only | Không dùng direct connection — cả 2 URL đi qua shared pooler (IPv4 ở mọi tier). IPv4 add-on là bản trả phí, không mua |
+| Cả nhóm dùng chung 1 database, không cách ly môi trường | Một người `db:seed` là xoá dữ liệu của cả nhóm | Cảnh báo in rõ trong README (mục 10.3); hỏi nhóm trước khi reseed; Docker local giữ lại cho ai cần phá dữ liệu tự do |
 | Race condition khi trừ kho | Bán vượt tồn kho | `updateMany` có điều kiện trong transaction + test song song (IMP-14) |
 | Lệch giờ UTC và giờ Việt Nam | Luật giá khung giờ sai | Truyền `now` vào hàm; so sánh theo `Asia/Ho_Chi_Minh`; có test |
 | Code do AI agent sinh ra sai ở chỗ nhạy cảm | Lỗi bảo mật hoặc tính tiền sai | Hợp đồng ở mục 5 viết trước; test mục 8.2 bắt buộc; người review đọc từng dòng `lib/payment`, `lib/order`, `lib/auth` |

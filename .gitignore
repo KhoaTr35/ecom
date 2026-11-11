@@ -27,3 +27,6 @@ next-env.d.ts
 # prisma
 prisma/dev.db
 lib/generated/
+
+# MCP server config — the Supabase entry embeds an access token in its URL
+.mcp.json
