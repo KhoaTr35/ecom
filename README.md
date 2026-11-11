@@ -11,6 +11,28 @@ do một biến `--radius` trong `app/globals.css` điều khiển (mọi `round
 chỗ. Token màu/typography cũng tập trung ở `app/globals.css` và
 `app/layout.tsx`.
 
+## Trải nghiệm hai giao diện (web & mobile-first)
+
+Site đã deploy: **https://atelier-neon-xi.vercel.app**
+
+- **Giao diện web (desktop):** mở thẳng https://atelier-neon-xi.vercel.app/
+- **Giao diện mobile-first:** mở https://atelier-neon-xi.vercel.app/mobile
+
+Trang `/mobile` nhúng site thật trong khung đúng kích thước viewport của
+**iPhone 16 Pro** (402×874 CSS point, tỉ lệ pixel 3x theo thông số Apple —
+`app/mobile/page.tsx`), kèm khung bezel + "Dynamic Island" cho giống máy
+thật. Đây **không phải** công cụ chỉ dùng khi code (xem mục dưới) — route
+này build vào production thật, chủ động để giảng viên xem được giao diện
+mobile-first ngay trên laptop mà không cần điện thoại. Lý do phải dùng
+iframe thay vì chỉ resize `<div>`: class `lg:` của Tailwind phản ứng theo
+viewport trình duyệt thật, không theo bề rộng phần tử cha — một cửa sổ
+laptop ≥1024px luôn hiện nửa desktop dù có bọc trong div nhỏ thế nào; chỉ
+iframe mới có viewport riêng, kích hoạt đúng lại breakpoint mobile.
+
+Mở thẳng https://atelier-neon-xi.vercel.app/ trên **điện thoại thật** cũng
+ra đúng giao diện mobile-first này, không cần qua `/mobile` — route đó chỉ
+tồn tại để xem được từ laptop.
+
 ## Tài khoản demo (sau khi seed)
 
 | Vai trò | Email | Mật khẩu |
@@ -282,6 +304,10 @@ dùng Neon. Lịch sử migration nằm ở `prisma/migrations/*/migration.sql`.
 | `docker compose up -d` / `down [-v]` | Bật/tắt Postgres local (xem phần Cài đặt) |
 
 ## Xem layout desktop/mobile song song (dev only)
+
+Khác với `/mobile` ở mục trên (route thật, có trong production, cố định
+iPhone 16 Pro) — đây là công cụ riêng cho lúc code, xem **bất kỳ trang nào**
+đang mở ở cả hai độ rộng, không cố định một thiết bị.
 
 `pnpm dev` có nút preview layout ở góc dưới-trái mọi trang (icon `</>`,
 `components/dev/dev-mode-frame.tsx`) — bấm vào để xem trang hiện tại trong
