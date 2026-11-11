@@ -78,7 +78,7 @@ export function ProductPurchasePanel({
                       "cursor-not-allowed border-border bg-transparent text-muted-foreground line-through hover:bg-transparent",
                     available &&
                       isSelected &&
-                      "border-foreground bg-foreground text-background hover:bg-foreground hover:text-background",
+                      "border-foreground data-[state=on]:bg-foreground data-[state=on]:text-background hover:bg-foreground hover:text-background",
                     available &&
                       !isSelected &&
                       "border-border bg-transparent hover:border-foreground hover:bg-transparent hover:text-foreground",

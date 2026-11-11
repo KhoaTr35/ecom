@@ -133,7 +133,9 @@ export function FeedProductSlide({ product, priority }: { product: FeedProduct; 
                   className={cn(
                     "min-w-11 rounded-lg border px-3 text-[13px] text-white disabled:line-through disabled:opacity-100",
                     !available && "border-white/40 bg-black/20 text-white/50",
-                    available && isSelected && "border-white bg-white font-semibold text-foreground",
+                    available &&
+                      isSelected &&
+                      "border-white data-[state=on]:bg-white data-[state=on]:text-foreground font-semibold",
                     available && !isSelected && "border-white/40 bg-black/20",
                   )}
                 >
